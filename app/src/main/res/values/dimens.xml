@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Padding values-->
+    <dimen name="padding_very_small">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">12dp</dimen>
+    <dimen name="padding_high">16dp</dimen>
+    <dimen name="padding_very_high">20dp</dimen>
+
+    <!--Search app bar-->
+    <dimen name="search_bar_height">52dp</dimen>
+
+    <!--Filter Button-->
+    <dimen name="filter_button_height">28dp</dimen>
+    <dimen name="filter_button_content_padding">8dp</dimen>
+
+</resources>

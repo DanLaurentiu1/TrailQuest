@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!--Padding values-->
     <dimen name="padding_very_small">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">12dp</dimen>
     <dimen name="padding_high">16dp</dimen>
     <dimen name="padding_very_high">20dp</dimen>
+    <dimen name="padding_very_very_high">40dp</dimen>
 
     <!--Search app bar-->
     <dimen name="search_bar_height">52dp</dimen>
@@ -14,5 +14,21 @@
     <!--Filter Button-->
     <dimen name="filter_button_height">28dp</dimen>
     <dimen name="filter_button_content_padding">8dp</dimen>
+
+    <!--Progress Bar-->
+    <dimen name="progress_bar_height">20dp</dimen>
+
+    <!--Corner Shapes-->
+    <dimen name="rounded_corner_shape_medium">16dp</dimen>
+
+    <!--Country Specific Statistics Height-->
+    <dimen name="country_specific_statistics_height">560dp</dimen>
+
+    <!--Navigation Rail Height-->
+    <dimen name="navigation_rail_height">124dp</dimen>
+
+    <!--Profile Picture Border Width-->
+    <dimen name="profile_picture_border_width">12dp</dimen>
+
 
 </resources>

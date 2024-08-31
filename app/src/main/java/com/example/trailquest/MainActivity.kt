@@ -1,6 +1,5 @@
 package com.example.trailquest
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,8 +15,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.MultiParagraph
-import androidx.core.content.withStyledAttributes
 import com.example.trailquest.ui.screens.main_screen.MainScreen
 import com.example.trailquest.ui.theme.TrailQuestAppTheme
 import com.google.android.gms.maps.model.LatLng
@@ -25,7 +22,6 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 
 class MainActivity : ComponentActivity() {

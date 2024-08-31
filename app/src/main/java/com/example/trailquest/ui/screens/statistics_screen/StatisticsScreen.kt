@@ -27,7 +27,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
 import com.example.trailquest.ui.theme.TrailQuestAppTheme

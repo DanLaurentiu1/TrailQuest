@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,10 +16,14 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.FloatingActionButtonElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,8 +34,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
+import com.example.trailquest.ui.reusable_components.StatisticsButton
 import com.example.trailquest.ui.theme.TrailQuestAppTheme
 
+@Preview(showBackground = true)
+@Composable
+fun TopAppBarPreview() {
+    MainScreen()
+}
 
 @Composable
 fun MainScreen() {
@@ -40,6 +51,11 @@ fun MainScreen() {
                 modifier = Modifier
             )
             FilterButtons(modifier = Modifier)
+            Spacer(modifier = Modifier.weight(1f))
+            Row(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
+                Spacer(modifier = Modifier.weight(1f))
+                StatisticsButton()
+            }
         }
     }
 }
@@ -136,10 +152,4 @@ fun ProfilePictureImage(
             contentDescription = description,
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TopAppBarPreview() {
-    MainScreen()
 }

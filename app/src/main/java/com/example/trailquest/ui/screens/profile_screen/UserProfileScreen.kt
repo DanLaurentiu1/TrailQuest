@@ -1,7 +1,6 @@
 package com.example.trailquest.ui.screens.profile_screen
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -15,19 +14,23 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposableOpenTarget
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
 import com.example.trailquest.ui.theme.TrailQuestAppTheme
+
+@Preview(showBackground = true)
+@Composable
+fun UserProfileScreenPreview() {
+    TrailQuestAppTheme {
+        ProfilePicture()
+    }
+}
 
 @Composable
 fun UserProfileScreen() {
@@ -87,12 +90,4 @@ fun ProfileStats() {
 @Composable
 fun AboutMeSection() {
 
-}
-
-@Preview(showBackground = true)
-@Composable
-fun UserProfileScreenPreview() {
-    TrailQuestAppTheme {
-        ProfilePicture()
-    }
 }

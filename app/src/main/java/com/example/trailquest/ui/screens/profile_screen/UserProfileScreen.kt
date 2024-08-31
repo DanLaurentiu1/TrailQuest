@@ -1,13 +1,20 @@
 package com.example.trailquest.ui.screens.profile_screen
 
+import android.view.Display.Mode
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
@@ -20,51 +27,45 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
+import com.example.trailquest.ui.reusable_components.CustomNavigationBar
+import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 import com.example.trailquest.ui.theme.TrailQuestAppTheme
 
 @Preview(showBackground = true)
 @Composable
 fun UserProfileScreenPreview() {
     TrailQuestAppTheme {
-        ProfilePicture()
+        UserProfileScreen()
     }
 }
 
 @Composable
 fun UserProfileScreen() {
-
-}
-
-@Composable
-fun NavigationRailIcon(@DrawableRes image: Int) {
-    Image(painter = painterResource(image), contentDescription = "")
-}
-
-@Composable
-fun CustomNavigationRail() {
-    NavigationRail(
-        modifier = Modifier
-            .height(dimensionResource(R.dimen.navigation_rail_height))
-    ) {
-        DataSources.navigationRailItems.forEach { (key, value) ->
-            NavigationRailItem(
-                selected = true,
-                onClick = { /*TODO*/ },
-                icon = { NavigationRailIcon(value) },
-                label = { Text(text = key) },
-                modifier = Modifier.padding(
-                    dimensionResource(R.dimen.padding_very_small)
-                )
-            )
+    Column(modifier = Modifier.fillMaxSize()) {
+        GoBackTopAppBar()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(R.dimen.padding_small))
+        ) {
+            ProfilePicture()
+            Column {
+                Text(text = "HogRida", style = MaterialTheme.typography.displaySmall)
+            }
         }
+        Spacer(modifier = Modifier.weight(1f))
+        CustomNavigationBar()
     }
 }
 
 @Composable
 fun ProfilePicture() {
-    Column(modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Image(
             painter = painterResource(R.drawable.android_superhero2), contentDescription = "",
             modifier = Modifier
@@ -74,17 +75,15 @@ fun ProfilePicture() {
                     MaterialTheme.colorScheme.secondary,
                     CircleShape
                 )
+                .width(140.dp)
+                .height(140.dp)
         )
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
-        Text(text = "HogRida", style = MaterialTheme.typography.displayMedium)
     }
 }
 
 @Composable
-fun ProfileStats() {
-    Row {
+fun LevelBar() {
 
-    }
 }
 
 @Composable

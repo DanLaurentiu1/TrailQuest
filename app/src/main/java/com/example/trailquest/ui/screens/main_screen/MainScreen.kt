@@ -34,7 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
-import com.example.trailquest.ui.reusable_components.StatisticsButton
+import com.example.trailquest.ui.reusable_components.CustomNavigationBar
 import com.example.trailquest.ui.theme.TrailQuestAppTheme
 
 @Preview(showBackground = true)
@@ -47,22 +47,19 @@ fun TopAppBarPreview() {
 fun MainScreen() {
     TrailQuestAppTheme {
         Column(modifier = Modifier.fillMaxSize()) {
-            AppBar(
+            SearchAppBar(
                 modifier = Modifier
             )
             FilterButtons(modifier = Modifier)
             Spacer(modifier = Modifier.weight(1f))
-            Row(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-                Spacer(modifier = Modifier.weight(1f))
-                StatisticsButton()
-            }
+            CustomNavigationBar()
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBar(modifier: Modifier = Modifier) {
+fun SearchAppBar(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()

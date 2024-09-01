@@ -112,4 +112,6 @@ object DataSources {
         6 to "Adventurer",
         7 to "Seasoned Adventurer",
     )
+
+    val attractions = listOf("Mount1", "Attraction1", "Zoo1", "Beach1", "Beach2")
 }

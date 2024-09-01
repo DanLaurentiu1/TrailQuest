@@ -13,8 +13,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.trailquest.R
+import com.example.trailquest.ui.theme.TrailQuestAppTheme
+
+@Preview
+@Composable
+fun NavigationIconPreview() {
+    TrailQuestAppTheme {
+        NavigationIcon(R.drawable.statistics_icon)
+    }
+}
 
 @Composable
 fun NavigationIcon(@DrawableRes icon: Int) {

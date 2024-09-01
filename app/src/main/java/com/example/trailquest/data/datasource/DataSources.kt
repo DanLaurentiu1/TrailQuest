@@ -101,4 +101,15 @@ object DataSources {
         "Back" to R.drawable.rounded_arrow_back_24,
         "Home" to R.drawable.rounded_home_24,
     )
+
+
+    val levelTitles = hashMapOf(
+        1 to "Newbie",
+        2 to "Rookie",
+        3 to "Explorer",
+        4 to "Journeyman",
+        5 to "Traveler",
+        6 to "Adventurer",
+        7 to "Seasoned Adventurer",
+    )
 }

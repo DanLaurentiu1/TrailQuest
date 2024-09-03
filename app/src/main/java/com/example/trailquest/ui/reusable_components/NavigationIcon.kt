@@ -15,26 +15,29 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.AppTheme
 import com.example.trailquest.R
-import com.example.trailquest.ui.theme.TrailQuestAppTheme
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun NavigationIconPreview() {
-    TrailQuestAppTheme {
-        NavigationIcon(R.drawable.statistics_icon)
+    AppTheme {
+        NavigationIcon(R.drawable.statistics_icon, onClick = {})
     }
 }
 
 @Composable
-fun NavigationIcon(@DrawableRes icon: Int) {
+fun NavigationIcon(
+    @DrawableRes icon: Int,
+    onClick: () -> Unit
+) {
     IconButton(
-        onClick = { /*TODO*/ },
+        onClick = onClick,
         modifier = Modifier
             .clip(CircleShape)
-            .background(Color.hsl(245f, 0.64f, 0.92f))
-            .width(80.dp)
-            .height(32.dp),
+            .background(Color.hsl(0f, 0f, 0.95f))
+            .width(dimensionResource(R.dimen.navigation_bar_icon_width))
+            .height(dimensionResource(R.dimen.navigation_bar_icon_height)),
 
         ) {
         Icon(

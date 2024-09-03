@@ -103,4 +103,11 @@
     ]
     }
     ]</string>
+
+
+    <!--Navigation Bar-->
+    <string name="navigation_bar_home_text">Home</string>
+    <string name="navigation_bar_home_statistics">Statistics</string>
+    <string name="navigation_bar_home_profile">Profile</string>
+    <string name="navigation_bar_title">TRAIL QUEST</string>
 </resources>

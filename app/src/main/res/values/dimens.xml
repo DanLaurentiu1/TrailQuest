@@ -17,7 +17,10 @@
     <dimen name="filter_button_content_padding">8dp</dimen>
 
     <!--Progress Bar-->
-    <dimen name="progress_bar_height">20dp</dimen>
+    <dimen name="progress_bar_height">24dp</dimen>
+    <dimen name="progress_bar_width">200dp</dimen>
+    <dimen name="progress_bar_border">1dp</dimen>
+
 
     <!--Corner Shapes-->
     <dimen name="rounded_corner_shape_medium">16dp</dimen>
@@ -25,8 +28,9 @@
     <!--Country Specific Statistics Height-->
     <dimen name="country_specific_statistics_height">560dp</dimen>
 
-    <!--Navigation Rail Height-->
-    <dimen name="navigation_rail_height">124dp</dimen>
+    <!--Navigation Top App Bar-->
+    <dimen name="navigation_top_bar_button_width">52dp</dimen>
+    <dimen name="navigation_top_bar_button_height">40dp</dimen>
 
     <!--Profile Picture Border Width-->
     <dimen name="profile_picture_border_width">8dp</dimen>
@@ -34,8 +38,10 @@
     <!--Floating Action Button Elevation-->
     <dimen name="floating_action_button_elevation">2dp</dimen>
 
-    <!--Navigation Bar Icons Size-->
+    <!--Navigation Bar-->
     <dimen name="navigation_bar_icons_size">24dp</dimen>
-
+    <dimen name="navigation_bar_clip_size">4dp</dimen>
+    <dimen name="navigation_bar_icon_width">80dp</dimen>
+    <dimen name="navigation_bar_icon_height">32dp</dimen>
 
 </resources>

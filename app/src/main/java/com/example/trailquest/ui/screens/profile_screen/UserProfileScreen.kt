@@ -22,16 +22,16 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.ui.reusable_components.CustomNavigationBar
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 import com.example.trailquest.ui.reusable_components.ProgressBar
-import com.example.trailquest.ui.theme.TrailQuestAppTheme
 
 @Preview(showBackground = true)
 @Composable
 fun UserProfileScreenPreview() {
-    TrailQuestAppTheme {
+    AppTheme {
         UserProfileScreen()
     }
 }
@@ -39,7 +39,7 @@ fun UserProfileScreenPreview() {
 @Composable
 fun UserProfileScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
-        GoBackTopAppBar()
+        GoBackTopAppBar(goBackOnClick = { /*TODO*/ }, goHomeOnClick = {})
         Card(
             onClick = { }, modifier = Modifier
                 .padding(12.dp)
@@ -106,7 +106,7 @@ fun TitleAndLevelSection() {
             text = "Adventurer, level 6", style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(bottom = 6.dp)
         )
-        ProgressBar()
+        ProgressBar(modifier = Modifier, text = "0/10", progress = 0.95f)
     }
 }
 

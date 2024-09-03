@@ -15,8 +15,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import com.example.compose.AppTheme
+import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 import com.example.trailquest.ui.screens.main_screen.MainScreen
-import com.example.trailquest.ui.theme.TrailQuestAppTheme
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            TrailQuestAppTheme {
+            AppTheme {
                 val layoutDirection = LocalLayoutDirection.current
                 Surface(
                     modifier = Modifier

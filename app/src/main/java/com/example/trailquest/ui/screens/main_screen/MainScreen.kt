@@ -28,10 +28,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
 import com.example.trailquest.ui.reusable_components.CustomNavigationBar
-import com.example.trailquest.ui.theme.TrailQuestAppTheme
 
 @Preview(showBackground = true)
 @Composable
@@ -41,7 +41,7 @@ fun TopAppBarPreview() {
 
 @Composable
 fun MainScreen() {
-    TrailQuestAppTheme {
+    AppTheme {
         Column(modifier = Modifier.fillMaxSize()) {
             SearchAppBar(
                 modifier = Modifier

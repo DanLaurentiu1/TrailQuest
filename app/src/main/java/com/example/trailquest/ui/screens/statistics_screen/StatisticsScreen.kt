@@ -16,11 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
+import com.example.trailquest.ui.reusable_components.GoBackAppBarPreview
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 import com.example.trailquest.ui.reusable_components.ProgressBar
-import com.example.trailquest.ui.theme.TrailQuestAppTheme
 
 @Composable
 fun StatisticsScreen() {
@@ -30,7 +31,9 @@ fun StatisticsScreen() {
 @Composable
 fun OverallStatistics() {
     LazyColumn {
-        item { GoBackTopAppBar() }
+        item {
+            GoBackTopAppBar(goBackOnClick = { /*TODO*/ }, goHomeOnClick = {})
+        }
         item {
             CountrySpecificStatistics(country = "Overall Statistics")
         }
@@ -61,7 +64,7 @@ fun CountrySpecificStatistics(modifier: Modifier = Modifier, country: String = "
                         modifier = Modifier.weight(1f),
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    ProgressBar(modifier = Modifier.weight(1.5f))
+                    ProgressBar(modifier = Modifier.weight(1.5f), text = "0/10", progress = 0.75f)
                 }
             }
         }
@@ -72,7 +75,7 @@ fun CountrySpecificStatistics(modifier: Modifier = Modifier, country: String = "
 @Preview(showBackground = true)
 @Composable
 fun StatisticsScreenPreview() {
-    TrailQuestAppTheme {
+    AppTheme {
         StatisticsScreen()
     }
 }

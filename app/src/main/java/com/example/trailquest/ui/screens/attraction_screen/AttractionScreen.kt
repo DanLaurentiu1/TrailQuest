@@ -20,15 +20,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.ui.reusable_components.CustomNavigationBar
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
-import com.example.trailquest.ui.theme.TrailQuestAppTheme
 
 @Preview(showBackground = true)
 @Composable
 private fun AttractionScreenPreview() {
-    TrailQuestAppTheme {
+    AppTheme {
         AttractionScreen()
     }
 }
@@ -36,7 +36,7 @@ private fun AttractionScreenPreview() {
 @Composable
 fun AttractionScreen(modifier: Modifier = Modifier) {
     Column(modifier = Modifier.fillMaxSize()) {
-        GoBackTopAppBar()
+        GoBackTopAppBar(goBackOnClick = { /*TODO*/ }, goHomeOnClick = {})
         AttractionTitleSection(modifier = Modifier.weight(1f))
         AttractionAboutSection(
             modifier = Modifier

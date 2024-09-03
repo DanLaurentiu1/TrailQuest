@@ -3,9 +3,7 @@ package com.example.trailquest.ui.screens.country_screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,15 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
-import com.example.trailquest.ui.theme.TrailQuestAppTheme
 
 @Preview(showBackground = true)
 @Composable
 private fun CountryScreenPreview() {
-    TrailQuestAppTheme {
+    AppTheme {
         CountryScreen()
     }
 }
@@ -34,7 +32,7 @@ private fun CountryScreenPreview() {
 @Composable
 fun CountryScreen(modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
-        item { GoBackTopAppBar() }
+        item { GoBackTopAppBar(goBackOnClick = { /*TODO*/ }, goHomeOnClick = {}) }
         item { CountryInformationSection() }
         items(DataSources.types) { type ->
             AttractionTypeSection(modifier = Modifier, type)

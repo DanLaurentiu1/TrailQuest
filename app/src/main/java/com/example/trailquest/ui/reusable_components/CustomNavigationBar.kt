@@ -1,6 +1,7 @@
 package com.example.trailquest.ui.reusable_components
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -13,6 +14,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 
@@ -32,9 +34,7 @@ fun CustomNavigationBar() {
                 RoundedCornerShape(dimensionResource(R.dimen.navigation_bar_clip_size))
             )
     ) {
-        Row(
-            modifier = Modifier,
-        ) {
+        Row {
             NavigationBarItem(
                 selected = false,
                 onClick = { /*TODO*/ },

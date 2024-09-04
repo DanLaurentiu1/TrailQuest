@@ -85,7 +85,7 @@ fun ProfilePicture() {
                 .clip(CircleShape)
                 .border(
                     dimensionResource(R.dimen.profile_picture_border_width),
-                    MaterialTheme.colorScheme.secondary,
+                    MaterialTheme.colorScheme.onPrimary,
                     CircleShape
                 )
                 .width(110.dp)

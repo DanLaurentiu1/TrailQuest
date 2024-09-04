@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
@@ -68,7 +69,8 @@ fun AttractionTitleSection(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     text = "Attraction 1",
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.weight(1f))
             }
@@ -90,6 +92,7 @@ fun AttractionAboutSection(modifier: Modifier = Modifier) {
                 Text(
                     text = "About",
                     style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Checkbox(checked = false, onCheckedChange = {})

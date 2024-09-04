@@ -15,11 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
-import com.example.trailquest.ui.reusable_components.GoBackAppBarPreview
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 import com.example.trailquest.ui.reusable_components.ProgressBar
 
@@ -46,7 +47,10 @@ fun OverallStatistics() {
 @Composable
 fun CountrySpecificStatistics(modifier: Modifier = Modifier, country: String = "") {
     Column(modifier = modifier) {
-        Text(text = country, style = MaterialTheme.typography.displayMedium)
+        Text(
+            text = country, style = MaterialTheme.typography.displaySmall,
+            fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp)
+        )
         LazyColumn(modifier = Modifier.height(dimensionResource(R.dimen.country_specific_statistics_height))) {
             items(DataSources.types) { item ->
                 Row(

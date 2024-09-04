@@ -110,4 +110,26 @@
     <string name="navigation_bar_home_statistics">Statistics</string>
     <string name="navigation_bar_home_profile">Profile</string>
     <string name="navigation_bar_title">TRAIL QUEST</string>
+
+    <!--Search Bar-->
+    <string name="search_bar_placeholder">Search...</string>
+
+
+    <!--Attraction Screen-->
+    <string name="attraction_screen_about">About</string>
+
+    <!--Country Screen-->
+    <string name="country_screen_button_completed">Completed</string>
+    <string name="country_screen_button_incomplete">Incomplete</string>
+    <string name="country_screen_visitors">%d visitors last month</string>
+
+    <!--User Profile Screen-->
+    <string name="user_profile_screen_most_liked_attraction">Most Liked Attractions</string>
+    <string name="user_profile_screen_most_liked_countries">Most Liked Countries</string>
+    <string name="user_profile_screen_bio">Bio</string>
+    <string name="user_profile_title">%s, level %d</string>
+
+    <!--User Profile Screen-->
+    <string name="statistics_screen_overall">Overall</string>
+
 </resources>

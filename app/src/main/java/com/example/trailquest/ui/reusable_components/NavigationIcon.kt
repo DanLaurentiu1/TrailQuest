@@ -28,7 +28,8 @@ fun NavigationIconPreview() {
 @Composable
 fun NavigationIcon(
     @DrawableRes icon: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    contentDescription: String = ""
 ) {
     IconButton(
         onClick = onClick,
@@ -40,7 +41,7 @@ fun NavigationIcon(
 
         ) {
         Icon(
-            painter = painterResource(icon), contentDescription = "",
+            painter = painterResource(icon), contentDescription = contentDescription,
             modifier = Modifier
                 .height(dimensionResource(R.dimen.navigation_bar_icons_size))
                 .width(dimensionResource(R.dimen.navigation_bar_icons_size))

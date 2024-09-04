@@ -1,7 +1,6 @@
 package com.example.trailquest.ui.reusable_components
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -14,7 +13,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 
@@ -22,23 +20,39 @@ import com.example.trailquest.R
 @Composable
 fun CustomNavigationBarPreview() {
     AppTheme {
-        CustomNavigationBar()
+        CustomNavigationBar(
+            modifier = Modifier,
+            isHomeSelected = false,
+            isStatisticsSelected = false,
+            isProfileSelected = false,
+            onHomeClicked = {},
+            onStatisticsClicked = {},
+            onProfileClicked = {}
+        )
     }
 }
 
 @Composable
-fun CustomNavigationBar() {
+fun CustomNavigationBar(
+    modifier: Modifier,
+    isHomeSelected: Boolean,
+    isStatisticsSelected: Boolean,
+    isProfileSelected: Boolean,
+    onHomeClicked: () -> Unit,
+    onStatisticsClicked: () -> Unit,
+    onProfileClicked: () -> Unit
+) {
     NavigationBar(
-        modifier = Modifier
+        modifier = modifier
             .clip(
                 RoundedCornerShape(dimensionResource(R.dimen.navigation_bar_clip_size))
             )
     ) {
         Row {
             NavigationBarItem(
-                selected = false,
-                onClick = { /*TODO*/ },
-                icon = { NavigationIcon(R.drawable.rounded_home_24, onClick = {}) },
+                selected = isHomeSelected,
+                onClick = onHomeClicked,
+                icon = { NavigationIcon(R.drawable.rounded_home_24, onClick = onHomeClicked) },
                 label = {
                     Text(
                         text = stringResource(R.string.navigation_bar_home_text),
@@ -47,9 +61,14 @@ fun CustomNavigationBar() {
                     )
                 })
             NavigationBarItem(
-                selected = false,
-                onClick = { /*TODO*/ },
-                icon = { NavigationIcon(R.drawable.statistics_icon, onClick = {}) },
+                selected = isStatisticsSelected,
+                onClick = onStatisticsClicked,
+                icon = {
+                    NavigationIcon(
+                        R.drawable.statistics_icon,
+                        onClick = onStatisticsClicked
+                    )
+                },
                 label = {
                     Text(
                         text = stringResource(R.string.navigation_bar_home_statistics),
@@ -58,9 +77,14 @@ fun CustomNavigationBar() {
                     )
                 })
             NavigationBarItem(
-                selected = false,
-                onClick = { /*TODO*/ },
-                icon = { NavigationIcon(R.drawable.profile_picture_icon, onClick = {}) },
+                selected = isProfileSelected,
+                onClick = onProfileClicked,
+                icon = {
+                    NavigationIcon(
+                        R.drawable.profile_picture_icon,
+                        onClick = onProfileClicked
+                    )
+                },
                 label = {
                     Text(
                         text = stringResource(R.string.navigation_bar_home_profile),
@@ -68,7 +92,6 @@ fun CustomNavigationBar() {
                         fontWeight = FontWeight.Bold
                     )
                 })
-
         }
     }
 }

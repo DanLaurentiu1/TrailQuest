@@ -9,18 +9,19 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.ui.reusable_components.CustomNavigationBar
@@ -30,31 +31,57 @@ import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 @Composable
 private fun AttractionScreenPreview() {
     AppTheme {
-        AttractionScreen()
+        AttractionScreen(
+            modifier = Modifier,
+            attractionTitle = "Attraction ASd",
+            aboutText = "asdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsa",
+            isChecked = false,
+            onChecked = {}
+        )
     }
 }
 
 @Composable
-fun AttractionScreen(modifier: Modifier = Modifier) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        GoBackTopAppBar(goBackOnClick = { /*TODO*/ }, goHomeOnClick = {})
-        AttractionTitleSection(modifier = Modifier.weight(1f))
+fun AttractionScreen(
+    modifier: Modifier = Modifier,
+    attractionTitle: String,
+    aboutText: String,
+    isChecked: Boolean,
+    onChecked: (Boolean) -> Unit
+) {
+    Column(modifier = modifier.fillMaxSize()) {
+        GoBackTopAppBar(goBackOnClick = { }, goHomeOnClick = {})
+        AttractionTitleSection(modifier = Modifier.weight(1f), attractionTitle = attractionTitle)
         AttractionAboutSection(
             modifier = Modifier
                 .weight(2f)
                 .fillMaxWidth()
-                .padding(12.dp)
+                .padding(dimensionResource(R.dimen.attraction_screen_about_me_section_padding)),
+            aboutText = aboutText,
+            isChecked = isChecked,
+            onChecked = onChecked
         )
-        CustomNavigationBar()
+        CustomNavigationBar(
+            modifier = Modifier,
+            isHomeSelected = false,
+            isStatisticsSelected = false,
+            isProfileSelected = false,
+            onHomeClicked = { },
+            onStatisticsClicked = { },
+            onProfileClicked = { })
     }
 }
 
 @Composable
-fun AttractionTitleSection(modifier: Modifier = Modifier) {
+fun AttractionTitleSection(
+    modifier: Modifier = Modifier,
+    contentDescription: String = "",
+    attractionTitle: String
+) {
     Box(modifier = modifier) {
         Image(
             painter = painterResource(id = R.drawable.android_superhero1),
-            contentDescription = "",
+            contentDescription = contentDescription,
             contentScale = ContentScale.FillWidth
         )
         Column {
@@ -68,7 +95,7 @@ fun AttractionTitleSection(modifier: Modifier = Modifier) {
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "Attraction 1",
+                    text = attractionTitle,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -79,29 +106,37 @@ fun AttractionTitleSection(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun AttractionAboutSection(modifier: Modifier = Modifier) {
-    Card(
-        onClick = { /*TODO*/ },
+fun AttractionAboutSection(
+    modifier: Modifier = Modifier,
+    aboutText: String,
+    isChecked: Boolean,
+    onChecked: (Boolean) -> Unit
+) {
+    ElevatedCard(
+        onClick = { },
         modifier = modifier
     ) {
         Column {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(12.dp, top = 4.dp)
+                modifier = Modifier.padding(
+                    horizontal = dimensionResource(R.dimen.attraction_screen_about_row_padding_horizontal),
+                    vertical = dimensionResource(R.dimen.attraction_screen_about_row_padding_vertical)
+                )
             ) {
                 Text(
-                    text = "About",
+                    text = stringResource(R.string.attraction_screen_about),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Checkbox(checked = false, onCheckedChange = {})
+                Checkbox(checked = isChecked, onCheckedChange = onChecked)
             }
             Text(
-                text = "asdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasddasdasdd",
+                text = aboutText,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(14.dp)
+                    .padding(dimensionResource(R.dimen.attraction_screen_about_me_text_padding))
             )
         }
     }

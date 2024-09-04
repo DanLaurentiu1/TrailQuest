@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.ui.reusable_components.CustomNavigationBar
@@ -32,36 +33,70 @@ import com.example.trailquest.ui.reusable_components.ProgressBar
 @Composable
 fun UserProfileScreenPreview() {
     AppTheme {
-        UserProfileScreen()
+        UserProfileScreen(
+            onBackButtonClick = { },
+            onHomeButtonClick = { },
+            onProfileButtonClick = { },
+            onStatisticsButtonClick = { },
+            userName = "HogRidaa",
+            progressBarProgress = 0.90f,
+            attractionsCompleted = 2,
+            attractionTotal = 123,
+            userTitle = "Adventurer",
+            userLevel = 6,
+            bioText = "I don't know"
+        )
     }
 }
 
 @Composable
-fun UserProfileScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        GoBackTopAppBar(goBackOnClick = { /*TODO*/ }, goHomeOnClick = {})
-        Card(
+fun UserProfileScreen(
+    modifier: Modifier = Modifier,
+    onBackButtonClick: () -> Unit,
+    onHomeButtonClick: () -> Unit,
+    onProfileButtonClick: () -> Unit,
+    onStatisticsButtonClick: () -> Unit,
+    userName: String,
+    progressBarProgress: Float,
+    attractionsCompleted: Int,
+    attractionTotal: Int,
+    userTitle: String,
+    userLevel: Int,
+    bioText: String
+) {
+    Column(modifier = modifier.fillMaxSize()) {
+        GoBackTopAppBar(goBackOnClick = onBackButtonClick, goHomeOnClick = onHomeButtonClick)
+        ElevatedCard(
             onClick = { }, modifier = Modifier
-                .padding(12.dp)
+                .padding(dimensionResource(R.dimen.user_profile_screen_card_padding))
                 .weight(1f)
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(dimensionResource(R.dimen.padding_very_small), top = 21.dp)
+                    .padding(
+                        dimensionResource(R.dimen.padding_very_small),
+                        top = dimensionResource(R.dimen.user_profile_screen_card_row_padding_top)
+                    )
                     .fillMaxHeight()
             ) {
                 ProfilePicture()
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        text = "HogRida", style = MaterialTheme.typography.displaySmall,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        text = userName, style = MaterialTheme.typography.displaySmall,
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        fontWeight = FontWeight.Bold
                     )
-                    TitleAndLevelSection()
+                    TitleAndLevelSection(
+                        progressBarProgress = progressBarProgress,
+                        progressBarText = "$attractionTotal/$attractionsCompleted",
+                        userTitle = userTitle,
+                        userLevel = userLevel
+                    )
                 }
             }
         }
-        BioSection(modifier = Modifier.weight(1.75f))
+        BioSection(modifier = Modifier.weight(1.75f), bioText = bioText)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -70,17 +105,30 @@ fun UserProfileScreen() {
             MostLikedCountriesSection(modifier = Modifier.weight(1f))
             MostLikedActivitiesSection(modifier = Modifier.weight(1f))
         }
-        CustomNavigationBar()
+        CustomNavigationBar(
+            modifier = Modifier,
+            isHomeSelected = false,
+            isStatisticsSelected = false,
+            isProfileSelected = false,
+            onHomeClicked = onHomeButtonClick,
+            onStatisticsClicked = onStatisticsButtonClick,
+            onProfileClicked = onProfileButtonClick
+        )
     }
 }
 
 @Composable
-fun ProfilePicture() {
+fun ProfilePicture(
+    modifier: Modifier = Modifier,
+    profilePictureContentDescription: String = ""
+) {
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(R.drawable.android_superhero2), contentDescription = "",
+            painter = painterResource(R.drawable.android_superhero2),
+            contentDescription = profilePictureContentDescription,
             modifier = Modifier
                 .clip(CircleShape)
                 .border(
@@ -88,64 +136,75 @@ fun ProfilePicture() {
                     MaterialTheme.colorScheme.onPrimary,
                     CircleShape
                 )
-                .width(110.dp)
-                .height(110.dp)
+                .width(dimensionResource(R.dimen.user_profile_screen_image_size))
+                .height(dimensionResource(R.dimen.user_profile_screen_image_size))
         )
     }
 }
 
 @Composable
-fun TitleAndLevelSection() {
+fun TitleAndLevelSection(
+    modifier: Modifier = Modifier,
+    progressBarProgress: Float,
+    progressBarText: String,
+    userTitle: String,
+    userLevel: Int
+) {
     Column(
-        modifier = Modifier
-            .padding(top = 6.dp)
+        modifier = modifier
+            .padding(top = dimensionResource(R.dimen.user_profile_screen_title_card_padding_vertical))
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Adventurer, level 6", style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(bottom = 6.dp)
+            text = stringResource(R.string.user_profile_title, userTitle, userLevel),
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.user_profile_screen_title_card_padding_vertical))
         )
-        ProgressBar(modifier = Modifier, text = "0/10", progress = 0.95f)
+        ProgressBar(modifier = Modifier, text = progressBarText, progress = progressBarProgress)
     }
 }
 
 @Composable
-fun BioSection(modifier: Modifier = Modifier) {
-    Card(
+fun BioSection(
+    modifier: Modifier = Modifier,
+    bioText: String
+) {
+    ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(dimensionResource(R.dimen.user_profile_screen_card_bio_padding))
     ) {
         Text(
-            text = "Bio",
+            text = stringResource(R.string.user_profile_screen_bio),
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(dimensionResource(R.dimen.user_profile_screen_column_countries_padding)),
+            fontWeight = FontWeight.Bold
         )
         Text(
-            text = "BioBioBioBio BioBioBioBio  BioBio Bio BioBioBio Bio Bio BioBioBioBioBio",
+            text = bioText,
             style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(dimensionResource(R.dimen.user_profile_screen_column_activities_padding))
         )
-
     }
 }
 
 @Composable
 fun MostLikedCountriesSection(modifier: Modifier = Modifier) {
-    Card(
+    ElevatedCard(
         modifier = modifier
-            .padding(12.dp)
+            .padding(dimensionResource(R.dimen.user_profile_screen_card_countries_padding))
             .fillMaxHeight()
     ) {
         Text(
-            text = "Most Liked Countries",
+            text = stringResource(R.string.user_profile_screen_most_liked_countries),
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(dimensionResource(R.dimen.user_profile_screen_card_countries_padding)),
+            fontWeight = FontWeight.Bold
         )
         Column(
             modifier = Modifier
-                .padding(start = 10.dp)
+                .padding(start = dimensionResource(R.dimen.user_profile_screen_column_countries_padding))
                 .fillMaxWidth()
         ) {
             Text(text = "Albania")
@@ -157,19 +216,20 @@ fun MostLikedCountriesSection(modifier: Modifier = Modifier) {
 
 @Composable
 fun MostLikedActivitiesSection(modifier: Modifier = Modifier) {
-    Card(
+    ElevatedCard(
         modifier = modifier
-            .padding(12.dp)
+            .padding(dimensionResource(R.dimen.user_profile_screen_card_activities_padding))
             .fillMaxHeight()
     ) {
         Text(
-            text = "Most Liked Attractions",
+            text = stringResource(R.string.user_profile_screen_most_liked_attraction),
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(dimensionResource(R.dimen.user_profile_screen_column_activities_padding)),
+            fontWeight = FontWeight.Bold
         )
         Column(
             modifier = Modifier
-                .padding(start = 10.dp)
+                .padding(start = dimensionResource(R.dimen.user_profile_screen_column_activities_padding))
                 .fillMaxWidth()
         ) {
             Text(text = "Zoos")
@@ -177,5 +237,4 @@ fun MostLikedActivitiesSection(modifier: Modifier = Modifier) {
             Text(text = "Nature")
         }
     }
-
 }

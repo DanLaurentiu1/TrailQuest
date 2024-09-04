@@ -15,28 +15,36 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 import com.example.trailquest.ui.reusable_components.ProgressBar
 
+
+@Preview(showBackground = true)
 @Composable
-fun StatisticsScreen() {
-    OverallStatistics()
+fun StatisticsScreenPreview() {
+    AppTheme {
+        OverallStatistics(onBackButtonClick = { }, onHomeButtonClick = {})
+    }
 }
 
 @Composable
-fun OverallStatistics() {
-    LazyColumn {
+fun OverallStatistics(
+    modifier: Modifier = Modifier,
+    onBackButtonClick: () -> Unit,
+    onHomeButtonClick: () -> Unit
+) {
+    LazyColumn(modifier = modifier) {
         item {
-            GoBackTopAppBar(goBackOnClick = { /*TODO*/ }, goHomeOnClick = {})
+            GoBackTopAppBar(goBackOnClick = onBackButtonClick, goHomeOnClick = onHomeButtonClick)
         }
         item {
-            CountrySpecificStatistics(country = "Overall Statistics")
+            CountrySpecificStatistics(country = stringResource(R.string.statistics_screen_overall))
         }
         items(DataSources.countries) { country ->
             CountrySpecificStatistics(modifier = Modifier, country = country)
@@ -45,11 +53,19 @@ fun OverallStatistics() {
 }
 
 @Composable
-fun CountrySpecificStatistics(modifier: Modifier = Modifier, country: String = "") {
+fun CountrySpecificStatistics(
+    modifier: Modifier = Modifier, country: String = "",
+    attractionTypeIconContentDescription: String = "",
+) {
     Column(modifier = modifier) {
         Text(
-            text = country, style = MaterialTheme.typography.displaySmall,
-            fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp)
+            text = country,
+            style = MaterialTheme.typography.displaySmall,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(
+                horizontal = dimensionResource(R.dimen.statistics_screen_country_name_padding_horizontal),
+                vertical = dimensionResource(R.dimen.statistics_screen_country_name_padding_vertical)
+            )
         )
         LazyColumn(modifier = Modifier.height(dimensionResource(R.dimen.country_specific_statistics_height))) {
             items(DataSources.types) { item ->
@@ -60,7 +76,7 @@ fun CountrySpecificStatistics(modifier: Modifier = Modifier, country: String = "
                 ) {
                     Icon(
                         painter = painterResource(DataSources.typesIcons[item]!!),
-                        contentDescription = "",
+                        contentDescription = attractionTypeIconContentDescription,
                         modifier = Modifier.weight(0.30f)
                     )
                     Text(
@@ -72,14 +88,5 @@ fun CountrySpecificStatistics(modifier: Modifier = Modifier, country: String = "
                 }
             }
         }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun StatisticsScreenPreview() {
-    AppTheme {
-        StatisticsScreen()
     }
 }

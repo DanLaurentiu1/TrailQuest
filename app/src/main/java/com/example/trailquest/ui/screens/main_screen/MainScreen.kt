@@ -3,7 +3,6 @@ package com.example.trailquest.ui.screens.main_screen
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,14 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.materialIcon
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalMinimumTouchTargetEnforcement
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SearchBar
@@ -33,13 +27,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
@@ -56,18 +49,38 @@ fun MainScreen() {
     AppTheme {
         Column(modifier = Modifier.fillMaxSize()) {
             SearchAppBar(
-                modifier = Modifier
+                modifier = Modifier,
+                onSearchClick = {},
+                onQueryChange = {},
+                isSearchBarActive = false,
+                onActiveChange = {}
             )
             FilterButtons(modifier = Modifier)
             Spacer(modifier = Modifier.weight(1f))
-            CustomNavigationBar()
+            CustomNavigationBar(
+                modifier = Modifier,
+                isHomeSelected = false,
+                isStatisticsSelected = false,
+                isProfileSelected = false,
+                onHomeClicked = { },
+                onStatisticsClicked = { },
+                onProfileClicked = { })
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchAppBar(modifier: Modifier = Modifier) {
+fun SearchAppBar(
+    modifier: Modifier = Modifier,
+    searchIconContentDescription: String = "",
+    profilePictureContentDescription: String = "",
+    searchBarQuery: String = "",
+    onSearchClick: (String) -> Unit,
+    onQueryChange: (String) -> Unit,
+    isSearchBarActive: Boolean,
+    onActiveChange: (Boolean) -> Unit
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -79,12 +92,12 @@ fun SearchAppBar(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         SearchBar(
-            query = "",
-            onQueryChange = { },
-            onSearch = { },
-            active = false,
-            onActiveChange = { },
-            placeholder = { Text("Search...") },
+            query = searchBarQuery,
+            onQueryChange = onQueryChange,
+            onSearch = onSearchClick,
+            active = isSearchBarActive,
+            onActiveChange = onActiveChange,
+            placeholder = { Text(stringResource(R.string.search_bar_placeholder)) },
             modifier = Modifier
                 .weight(6f)
                 .padding(end = dimensionResource(R.dimen.padding_very_small))
@@ -92,14 +105,14 @@ fun SearchAppBar(modifier: Modifier = Modifier) {
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.rounded_search_24),
-                    contentDescription = ""
+                    contentDescription = searchIconContentDescription
                 )
             },
             trailingIcon = {
                 ProfilePictureImage(
                     drawableResource = R.drawable.android_superhero4,
-                    description = "s",
-                    modifier = Modifier.padding(all = dimensionResource(R.dimen.padding_very_small))
+                    description = profilePictureContentDescription,
+                    modifier = Modifier.padding(dimensionResource(R.dimen.padding_very_small))
                 )
             }
         ) {
@@ -108,9 +121,12 @@ fun SearchAppBar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun FilterButton(modifier: Modifier = Modifier, text: String) {
+fun FilterButton(
+    modifier: Modifier = Modifier, text: String,
+    onFilterButtonClick: () -> Unit
+) {
     OutlinedButton(
-        onClick = { /*TODO*/ },
+        onClick = onFilterButtonClick,
         contentPadding = PaddingValues(dimensionResource(R.dimen.filter_button_content_padding)),
         modifier = modifier
             .height(dimensionResource(R.dimen.filter_button_height))
@@ -119,7 +135,10 @@ fun FilterButton(modifier: Modifier = Modifier, text: String) {
                     R.dimen.padding_medium
                 )
             ),
-        border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondary),
+        border = BorderStroke(
+            width = dimensionResource(R.dimen.filter_button_border_width),
+            color = MaterialTheme.colorScheme.secondary
+        ),
         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Text(
@@ -144,7 +163,7 @@ fun FilterButtons(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         items(DataSources.types) { item ->
-            FilterButton(text = item)
+            FilterButton(text = item, onFilterButtonClick = {})
         }
     }
 }

@@ -11,9 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -22,11 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
@@ -36,15 +36,26 @@ import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 @Composable
 private fun CountryScreenPreview() {
     AppTheme {
-        CountryScreen()
+        CountryScreen(
+            goBackOnClick = { },
+            goHomeOnClick = { },
+            countryName = "France",
+            visitors = 12345
+        )
     }
 }
 
 @Composable
-fun CountryScreen(modifier: Modifier = Modifier) {
+fun CountryScreen(
+    modifier: Modifier = Modifier,
+    goBackOnClick: () -> Unit,
+    goHomeOnClick: () -> Unit,
+    countryName: String,
+    visitors: Int
+) {
     LazyColumn(modifier = modifier) {
-        item { GoBackTopAppBar(goBackOnClick = { /*TODO*/ }, goHomeOnClick = {}) }
-        item { CountryInformationSection() }
+        item { GoBackTopAppBar(goBackOnClick = goBackOnClick, goHomeOnClick = goHomeOnClick) }
+        item { CountryInformationSection(countryName = countryName, visitors = visitors) }
         items(DataSources.types) { type ->
             AttractionTypeSection(modifier = Modifier, type)
         }
@@ -52,51 +63,72 @@ fun CountryScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CountryInformationSection(modifier: Modifier = Modifier) {
-    Card(
+fun CountryInformationSection(
+    modifier: Modifier = Modifier,
+    countryName: String,
+    starContentDescription: String = "",
+    visitors: Int
+) {
+    ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(dimensionResource(R.dimen.attraction_screen_country_information_card_padding))
     ) {
         Column(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier.padding(dimensionResource(R.dimen.attraction_screen_country_information_column_padding)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "France", modifier = Modifier.padding(end = 16.dp))
+                Text(
+                    text = countryName,
+                    modifier = Modifier.padding(end = dimensionResource(R.dimen.country_screen_country_name_padding_end))
+                )
                 for (i in 1..5) {
-                    Icon(painter = painterResource(R.drawable.star_icon), contentDescription = "")
+                    Icon(
+                        painter = painterResource(R.drawable.star_icon),
+                        contentDescription = starContentDescription
+                    )
                 }
             }
-            Text(text = "12658 visitors last month")
+            Text(text = stringResource(R.string.country_screen_visitors, visitors))
         }
     }
 }
 
 @Composable
 fun AttractionTypeSection(modifier: Modifier = Modifier, attractionTypeName: String) {
-    Card(
+    ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp, horizontal = 8.dp)
+            .padding(
+                vertical = dimensionResource(R.dimen.attraction_screen_attraction_type_card_padding_vertical),
+                horizontal = dimensionResource(R.dimen.attraction_screen_attraction_type_card_padding_horizontal)
+            )
     ) {
         Column(modifier = Modifier) {
             Text(
                 text = attractionTypeName,
-                modifier = Modifier.padding(bottom = 4.dp, top = 10.dp, start = 8.dp),
+                modifier = Modifier.padding(
+                    bottom = dimensionResource(R.dimen.attraction_screen_attraction_type_name_padding_bottom),
+                    top = dimensionResource(R.dimen.attraction_screen_attraction_type_name_padding_top),
+                    start = dimensionResource(R.dimen.attraction_screen_attraction_type_name_padding_start)
+                ),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
             for (attraction in DataSources.attractions) {
-                Card {
+                ElevatedCard(shape = RectangleShape) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 40.dp, end = 40.dp, bottom = 4.dp),
+                            .padding(
+                                start = dimensionResource(R.dimen.attraction_screen_attraction_padding_horizontal),
+                                end = dimensionResource(R.dimen.attraction_screen_attraction_padding_horizontal),
+                                bottom = dimensionResource(R.dimen.attraction_screen_attraction_padding_bottom)
+                            ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -118,18 +150,26 @@ private fun AttractionStatusSectionPrev() {
 }
 
 @Composable
-fun AttractionStatusSection(modifier: Modifier = Modifier, isCompleted: Boolean) {
+fun AttractionStatusSection(
+    modifier: Modifier = Modifier, isCompleted: Boolean
+) {
     val color =
         if (isCompleted) Color.Green else Color.Red
-    val text = if (isCompleted) "Completed" else "Incomplete"
+    val text =
+        if (isCompleted) stringResource(R.string.country_screen_button_completed) else stringResource(
+            R.string.country_screen_button_incomplete
+        )
 
     OutlinedButton(
-        border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondary),
-        contentPadding = PaddingValues(1.dp),
+        border = BorderStroke(
+            width = dimensionResource(R.dimen.country_screen_button_outline_width),
+            color = MaterialTheme.colorScheme.secondary
+        ),
+        contentPadding = PaddingValues(dimensionResource(R.dimen.country_screen_button_text_padding)),
         modifier = modifier
-            .height(33.dp)
-            .width(82.dp)
-            .padding(4.dp),
+            .height(dimensionResource(R.dimen.country_screen_button_height))
+            .width(dimensionResource(R.dimen.country_screen_button_width))
+            .padding(dimensionResource(R.dimen.country_screen_button_padding)),
         onClick = { },
         colors = ButtonDefaults.buttonColors(containerColor = color)
     ) {

@@ -41,30 +41,53 @@ import com.example.trailquest.ui.reusable_components.CustomNavigationBar
 @Preview(showBackground = true)
 @Composable
 fun TopAppBarPreview() {
-    MainScreen()
+    MainScreen(
+        onSearchClick = { },
+        onQueryChange = { },
+        onActiveChange = { },
+        isSearchBarActive = false,
+        isHomeSelected = false,
+        isStatisticsSelected = false,
+        isProfileSelected = false,
+        onHomeClicked = { },
+        onStatisticsClicked = { },
+        onProfileClicked = {}
+    )
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    onSearchClick: (String) -> Unit,
+    onQueryChange: (String) -> Unit,
+    onActiveChange: (Boolean) -> Unit,
+    isSearchBarActive: Boolean,
+    isHomeSelected: Boolean,
+    isStatisticsSelected: Boolean,
+    isProfileSelected: Boolean,
+    onHomeClicked: () -> Unit,
+    onStatisticsClicked: () -> Unit,
+    onProfileClicked: () -> Unit
+) {
     AppTheme {
         Column(modifier = Modifier.fillMaxSize()) {
             SearchAppBar(
                 modifier = Modifier,
-                onSearchClick = {},
-                onQueryChange = {},
-                isSearchBarActive = false,
-                onActiveChange = {}
+                onSearchClick = onSearchClick,
+                onQueryChange = onQueryChange,
+                isSearchBarActive = isSearchBarActive,
+                onActiveChange = onActiveChange
             )
             FilterButtons(modifier = Modifier)
             Spacer(modifier = Modifier.weight(1f))
             CustomNavigationBar(
                 modifier = Modifier,
-                isHomeSelected = false,
-                isStatisticsSelected = false,
-                isProfileSelected = false,
-                onHomeClicked = { },
-                onStatisticsClicked = { },
-                onProfileClicked = { })
+                isHomeSelected = isHomeSelected,
+                isStatisticsSelected = isStatisticsSelected,
+                isProfileSelected = isProfileSelected,
+                onHomeClicked = onHomeClicked,
+                onStatisticsClicked = onStatisticsClicked,
+                onProfileClicked = onProfileClicked
+            )
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.trailquest.ui.screens.profile_screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,7 +30,7 @@ import com.example.trailquest.ui.reusable_components.CustomNavigationBar
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 import com.example.trailquest.ui.reusable_components.ProgressBar
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun UserProfileScreenPreview() {
     AppTheme {
@@ -39,12 +40,13 @@ fun UserProfileScreenPreview() {
             onProfileButtonClick = { },
             onStatisticsButtonClick = { },
             userName = "HogRidaa",
-            progressBarProgress = 0.90f,
-            attractionsCompleted = 2,
-            attractionTotal = 123,
+            attractionsCompleted = 40f,
+            attractionTotal = 123f,
             userTitle = "Adventurer",
             userLevel = 6,
-            bioText = "I don't know"
+            bioText = "I don't know",
+            mostLikedCountries = listOf("Albania", "France", "Belgium"),
+            mostLikedActivities = listOf("Zoo", "Nature", "Food")
         )
     }
 }
@@ -57,14 +59,17 @@ fun UserProfileScreen(
     onProfileButtonClick: () -> Unit,
     onStatisticsButtonClick: () -> Unit,
     userName: String,
-    progressBarProgress: Float,
-    attractionsCompleted: Int,
-    attractionTotal: Int,
+    attractionsCompleted: Float,
+    attractionTotal: Float,
     userTitle: String,
     userLevel: Int,
-    bioText: String
+    bioText: String,
+    mostLikedCountries: List<String>,
+    mostLikedActivities: List<String>
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.onPrimary)) {
         GoBackTopAppBar(goBackOnClick = onBackButtonClick, goHomeOnClick = onHomeButtonClick)
         ElevatedCard(
             onClick = { }, modifier = Modifier
@@ -88,8 +93,8 @@ fun UserProfileScreen(
                         fontWeight = FontWeight.Bold
                     )
                     TitleAndLevelSection(
-                        progressBarProgress = progressBarProgress,
-                        progressBarText = "$attractionTotal/$attractionsCompleted",
+                        progressBarProgress = attractionsCompleted / attractionTotal,
+                        progressBarText = "$attractionsCompleted/$attractionTotal",
                         userTitle = userTitle,
                         userLevel = userLevel
                     )
@@ -102,8 +107,14 @@ fun UserProfileScreen(
                 .fillMaxWidth()
                 .weight(1.25f)
         ) {
-            MostLikedCountriesSection(modifier = Modifier.weight(1f))
-            MostLikedActivitiesSection(modifier = Modifier.weight(1f))
+            MostLikedCountriesSection(
+                modifier = Modifier.weight(1f),
+                mostLikedCountries = mostLikedCountries
+            )
+            MostLikedActivitiesSection(
+                modifier = Modifier.weight(1f),
+                mostLikedActivities = mostLikedActivities
+            )
         }
         CustomNavigationBar(
             modifier = Modifier,
@@ -190,7 +201,10 @@ fun BioSection(
 }
 
 @Composable
-fun MostLikedCountriesSection(modifier: Modifier = Modifier) {
+fun MostLikedCountriesSection(
+    modifier: Modifier = Modifier,
+    mostLikedCountries: List<String>
+) {
     ElevatedCard(
         modifier = modifier
             .padding(dimensionResource(R.dimen.user_profile_screen_card_countries_padding))
@@ -207,15 +221,18 @@ fun MostLikedCountriesSection(modifier: Modifier = Modifier) {
                 .padding(start = dimensionResource(R.dimen.user_profile_screen_column_countries_padding))
                 .fillMaxWidth()
         ) {
-            Text(text = "Albania")
-            Text(text = "Albania")
-            Text(text = "Albania")
+            for (countryName in mostLikedCountries) {
+                Text(text = countryName)
+            }
         }
     }
 }
 
 @Composable
-fun MostLikedActivitiesSection(modifier: Modifier = Modifier) {
+fun MostLikedActivitiesSection(
+    modifier: Modifier = Modifier,
+    mostLikedActivities: List<String>
+) {
     ElevatedCard(
         modifier = modifier
             .padding(dimensionResource(R.dimen.user_profile_screen_card_activities_padding))
@@ -232,9 +249,9 @@ fun MostLikedActivitiesSection(modifier: Modifier = Modifier) {
                 .padding(start = dimensionResource(R.dimen.user_profile_screen_column_activities_padding))
                 .fillMaxWidth()
         ) {
-            Text(text = "Zoos")
-            Text(text = "Beaches")
-            Text(text = "Nature")
+            for (activityName in mostLikedActivities) {
+                Text(text = activityName)
+            }
         }
     }
 }

@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import com.example.compose.AppTheme
-import com.example.trailquest.ui.screens.main_screen.MainScreen
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
@@ -73,7 +72,7 @@ class MainActivity : ComponentActivity() {
                                 mapStyleOptions = MapStyleOptions(stringResource(R.string.map_style))
                             )
                         )
-                        MainScreen()
+                        TrailQuestApplication()
                     }
                 }
             }

@@ -2,10 +2,11 @@ package com.example.trailquest.ui.screens.attraction_screen
 
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
+import com.example.trailquest.data.repository.attraction.AttractionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-class AttractionScreenViewModel : ViewModel() {
+class AttractionScreenViewModel(attractionRepository: AttractionRepository) : ViewModel() {
     var uiState = MutableStateFlow(AttractionScreenUiState())
         private set
 

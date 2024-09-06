@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
 }
 buildscript {
+    extra.apply {
+        set("room_version", "2.6.0")
+    }
     dependencies {
         classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
     }

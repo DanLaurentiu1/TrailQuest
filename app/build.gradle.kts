@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
 android {
@@ -70,6 +71,16 @@ dependencies {
     // Navigation
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+
+    //Room
+    implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
+    implementation("androidx.core:core-ktx:1.12.0")
+    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
+    implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

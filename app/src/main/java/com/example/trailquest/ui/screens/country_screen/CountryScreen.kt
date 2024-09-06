@@ -1,6 +1,8 @@
 package com.example.trailquest.ui.screens.country_screen
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,20 +30,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun CountryScreenPreview() {
     AppTheme {
         CountryScreen(
-            goBackOnClick = { },
-            goHomeOnClick = { },
-            countryName = "France",
-            visitors = 12345
+            onBackClicked = { },
+            onHomeClicked = { },
+            onAttractionClicked = {},
+            viewModel = CountryScreenViewModel()
         )
     }
 }
@@ -48,16 +52,27 @@ private fun CountryScreenPreview() {
 @Composable
 fun CountryScreen(
     modifier: Modifier = Modifier,
-    goBackOnClick: () -> Unit,
-    goHomeOnClick: () -> Unit,
-    countryName: String,
-    visitors: Int
+    onBackClicked: () -> Unit,
+    onHomeClicked: () -> Unit,
+    onAttractionClicked: (String) -> Unit,
+    viewModel: CountryScreenViewModel = viewModel()
 ) {
-    LazyColumn(modifier = modifier) {
-        item { GoBackTopAppBar(goBackOnClick = goBackOnClick, goHomeOnClick = goHomeOnClick) }
-        item { CountryInformationSection(countryName = countryName, visitors = visitors) }
+    val uiState = viewModel.uiState.collectAsState().value
+
+    LazyColumn(modifier = modifier.background(MaterialTheme.colorScheme.onPrimary)) {
+        item { GoBackTopAppBar(goBackOnClick = onBackClicked, goHomeOnClick = onHomeClicked) }
+        item {
+            CountryInformationSection(
+                countryName = uiState.countryName,
+                visitors = uiState.countryVisitors
+            )
+        }
         items(DataSources.types) { type ->
-            AttractionTypeSection(modifier = Modifier, type)
+            AttractionTypeSection(
+                modifier = Modifier,
+                attractionTypeName = type,
+                onAttractionClicked = onAttractionClicked
+            )
         }
     }
 }
@@ -99,7 +114,10 @@ fun CountryInformationSection(
 }
 
 @Composable
-fun AttractionTypeSection(modifier: Modifier = Modifier, attractionTypeName: String) {
+fun AttractionTypeSection(
+    modifier: Modifier = Modifier, attractionTypeName: String,
+    onAttractionClicked: (String) -> Unit
+) {
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
@@ -120,7 +138,10 @@ fun AttractionTypeSection(modifier: Modifier = Modifier, attractionTypeName: Str
                 fontWeight = FontWeight.Bold
             )
             for (attraction in DataSources.attractions) {
-                ElevatedCard(shape = RectangleShape) {
+                ElevatedCard(
+                    shape = RectangleShape,
+                    modifier = Modifier.clickable(onClick = { onAttractionClicked(attraction) })
+                ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

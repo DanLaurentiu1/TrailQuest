@@ -16,6 +16,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.ui.reusable_components.CustomNavigationBar
@@ -35,18 +37,10 @@ import com.example.trailquest.ui.reusable_components.ProgressBar
 fun UserProfileScreenPreview() {
     AppTheme {
         UserProfileScreen(
-            onBackButtonClick = { },
-            onHomeButtonClick = { },
-            onProfileButtonClick = { },
-            onStatisticsButtonClick = { },
-            userName = "HogRidaa",
-            attractionsCompleted = 40f,
-            attractionTotal = 123f,
-            userTitle = "Adventurer",
-            userLevel = 6,
-            bioText = "I don't know",
-            mostLikedCountries = listOf("Albania", "France", "Belgium"),
-            mostLikedActivities = listOf("Zoo", "Nature", "Food")
+            onBackClicked = { },
+            onHomeClicked = { },
+            onProfileClicked = { },
+            onStatisticsClicked = { }
         )
     }
 }
@@ -54,25 +48,22 @@ fun UserProfileScreenPreview() {
 @Composable
 fun UserProfileScreen(
     modifier: Modifier = Modifier,
-    onBackButtonClick: () -> Unit,
-    onHomeButtonClick: () -> Unit,
-    onProfileButtonClick: () -> Unit,
-    onStatisticsButtonClick: () -> Unit,
-    userName: String,
-    attractionsCompleted: Float,
-    attractionTotal: Float,
-    userTitle: String,
-    userLevel: Int,
-    bioText: String,
-    mostLikedCountries: List<String>,
-    mostLikedActivities: List<String>
+    onBackClicked: () -> Unit,
+    onHomeClicked: () -> Unit,
+    onProfileClicked: () -> Unit,
+    onStatisticsClicked: () -> Unit,
+    viewModel: UserProfileScreenViewModel = viewModel()
 ) {
-    Column(modifier = modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.onPrimary)) {
-        GoBackTopAppBar(goBackOnClick = onBackButtonClick, goHomeOnClick = onHomeButtonClick)
+    val uiState = viewModel.uiState.collectAsState().value
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.onPrimary)
+    ) {
+        GoBackTopAppBar(goBackOnClick = onBackClicked, goHomeOnClick = onHomeClicked)
         ElevatedCard(
-            onClick = { }, modifier = Modifier
+            modifier = Modifier
                 .padding(dimensionResource(R.dimen.user_profile_screen_card_padding))
                 .weight(1f)
         ) {
@@ -88,20 +79,20 @@ fun UserProfileScreen(
                 ProfilePicture()
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        text = userName, style = MaterialTheme.typography.displaySmall,
+                        text = uiState.userName, style = MaterialTheme.typography.displaySmall,
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         fontWeight = FontWeight.Bold
                     )
                     TitleAndLevelSection(
-                        progressBarProgress = attractionsCompleted / attractionTotal,
-                        progressBarText = "$attractionsCompleted/$attractionTotal",
-                        userTitle = userTitle,
-                        userLevel = userLevel
+                        progressBarProgress = uiState.attractionsCompleted / uiState.attractionTotal,
+                        progressBarText = "${uiState.attractionsCompleted}/${uiState.attractionTotal}",
+                        userTitle = uiState.userTitle,
+                        userLevel = uiState.userLevel
                     )
                 }
             }
         }
-        BioSection(modifier = Modifier.weight(1.75f), bioText = bioText)
+        BioSection(modifier = Modifier.weight(1.75f), bioText = uiState.bioText)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -109,11 +100,11 @@ fun UserProfileScreen(
         ) {
             MostLikedCountriesSection(
                 modifier = Modifier.weight(1f),
-                mostLikedCountries = mostLikedCountries
+                mostLikedCountries = uiState.mostLikedCountries
             )
             MostLikedActivitiesSection(
                 modifier = Modifier.weight(1f),
-                mostLikedActivities = mostLikedActivities
+                mostLikedActivities = uiState.mostLikedActivities
             )
         }
         CustomNavigationBar(
@@ -121,9 +112,9 @@ fun UserProfileScreen(
             isHomeSelected = false,
             isStatisticsSelected = false,
             isProfileSelected = false,
-            onHomeClicked = onHomeButtonClick,
-            onStatisticsClicked = onStatisticsButtonClick,
-            onProfileClicked = onProfileButtonClick
+            onHomeClicked = onHomeClicked,
+            onStatisticsClicked = onStatisticsClicked,
+            onProfileClicked = onProfileClicked
         )
     }
 }

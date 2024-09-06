@@ -1,6 +1,7 @@
 package com.example.trailquest.ui.screens.attraction_screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -22,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.ui.reusable_components.CustomNavigationBar
@@ -33,10 +36,11 @@ private fun AttractionScreenPreview() {
     AppTheme {
         AttractionScreen(
             modifier = Modifier,
-            attractionTitle = "Attraction ASd",
-            aboutText = "asdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsaasdasddsa",
-            isChecked = false,
-            onChecked = {}
+            onHomeClicked = {},
+            onBackClicked = {},
+            onProfileClicked = {},
+            onStatisticsClicked = {},
+            viewModel = viewModel()
         )
     }
 }
@@ -44,31 +48,40 @@ private fun AttractionScreenPreview() {
 @Composable
 fun AttractionScreen(
     modifier: Modifier = Modifier,
-    attractionTitle: String,
-    aboutText: String,
-    isChecked: Boolean,
-    onChecked: (Boolean) -> Unit
+    onHomeClicked: () -> Unit,
+    onBackClicked: () -> Unit,
+    onStatisticsClicked: () -> Unit,
+    onProfileClicked: () -> Unit,
+    viewModel: AttractionScreenViewModel = viewModel()
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
-        GoBackTopAppBar(goBackOnClick = { }, goHomeOnClick = {})
-        AttractionTitleSection(modifier = Modifier.weight(1f), attractionTitle = attractionTitle)
+    val uiState = viewModel.uiState.collectAsState().value
+
+    Column(modifier = modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.onPrimary)) {
+        GoBackTopAppBar(goBackOnClick = onBackClicked, goHomeOnClick = onHomeClicked)
+        AttractionTitleSection(
+            modifier = Modifier.weight(1f),
+            attractionTitle = uiState.attractionName
+        )
         AttractionAboutSection(
             modifier = Modifier
                 .weight(2f)
                 .fillMaxWidth()
                 .padding(dimensionResource(R.dimen.attraction_screen_about_me_section_padding)),
-            aboutText = aboutText,
-            isChecked = isChecked,
-            onChecked = onChecked
+            aboutText = uiState.aboutText,
+            isChecked = uiState.isCompleted,
+            onChecked = { /* VIEW MODEL HERE */ }
         )
         CustomNavigationBar(
             modifier = Modifier,
             isHomeSelected = false,
             isStatisticsSelected = false,
             isProfileSelected = false,
-            onHomeClicked = { },
-            onStatisticsClicked = { },
-            onProfileClicked = { })
+            onHomeClicked = onHomeClicked,
+            onStatisticsClicked = onStatisticsClicked,
+            onProfileClicked = onProfileClicked
+        )
     }
 }
 

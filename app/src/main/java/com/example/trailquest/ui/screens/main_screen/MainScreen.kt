@@ -24,6 +24,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
@@ -42,48 +44,44 @@ import com.example.trailquest.ui.reusable_components.CustomNavigationBar
 @Composable
 fun TopAppBarPreview() {
     MainScreen(
-        onSearchClick = { },
-        onQueryChange = { },
-        onActiveChange = { },
-        isSearchBarActive = false,
-        isHomeSelected = false,
-        isStatisticsSelected = false,
-        isProfileSelected = false,
         onHomeClicked = { },
         onStatisticsClicked = { },
-        onProfileClicked = {}
+        onProfileClicked = {},
+        onCountrySelected = {}
     )
 }
 
 @Composable
 fun MainScreen(
-    onSearchClick: (String) -> Unit,
-    onQueryChange: (String) -> Unit,
-    onActiveChange: (Boolean) -> Unit,
-    isSearchBarActive: Boolean,
-    isHomeSelected: Boolean,
-    isStatisticsSelected: Boolean,
-    isProfileSelected: Boolean,
     onHomeClicked: () -> Unit,
     onStatisticsClicked: () -> Unit,
-    onProfileClicked: () -> Unit
+    onProfileClicked: () -> Unit,
+    onCountrySelected: (String) -> Unit,
+    viewModel: MainScreenViewModel = viewModel()
 ) {
+    val uiState = viewModel.uiState.collectAsState().value
+
     AppTheme {
         Column(modifier = Modifier.fillMaxSize()) {
             SearchAppBar(
                 modifier = Modifier,
-                onSearchClick = onSearchClick,
-                onQueryChange = onQueryChange,
-                isSearchBarActive = isSearchBarActive,
-                onActiveChange = onActiveChange
+                searchBarQuery = uiState.searchBarQuery,
+                onSearchClick = {
+                    if (viewModel.searchClick()) {
+                        onCountrySelected(uiState.searchBarQuery)
+                    }
+                },
+                onQueryChange = { viewModel.updateSearchBarQuery(it) },
+                isSearchBarActive = uiState.isSearchBarActive,
+                onActiveChange = {}
             )
             FilterButtons(modifier = Modifier)
             Spacer(modifier = Modifier.weight(1f))
             CustomNavigationBar(
                 modifier = Modifier,
-                isHomeSelected = isHomeSelected,
-                isStatisticsSelected = isStatisticsSelected,
-                isProfileSelected = isProfileSelected,
+                isHomeSelected = uiState.isHomeSelected,
+                isStatisticsSelected = uiState.isStatisticsSelected,
+                isProfileSelected = uiState.isProfileSelected,
                 onHomeClicked = onHomeClicked,
                 onStatisticsClicked = onStatisticsClicked,
                 onProfileClicked = onProfileClicked

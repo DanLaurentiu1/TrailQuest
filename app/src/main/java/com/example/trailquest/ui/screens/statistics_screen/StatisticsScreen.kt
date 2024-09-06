@@ -1,5 +1,6 @@
 package com.example.trailquest.ui.screens.statistics_screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -18,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.datasource.DataSources
@@ -29,25 +32,39 @@ import com.example.trailquest.ui.reusable_components.ProgressBar
 @Composable
 fun StatisticsScreenPreview() {
     AppTheme {
-        OverallStatistics(onBackButtonClick = { }, onHomeButtonClick = {})
+        StatisticsScreen(onBackClicked = { }, onHomeClicked = {})
     }
 }
 
 @Composable
-fun OverallStatistics(
+fun StatisticsScreen(
     modifier: Modifier = Modifier,
-    onBackButtonClick: () -> Unit,
-    onHomeButtonClick: () -> Unit
+    onBackClicked: () -> Unit,
+    onHomeClicked: () -> Unit,
+    viewModel: StatisticsScreenViewModel = viewModel()
 ) {
-    LazyColumn(modifier = modifier) {
+    val uiState = viewModel.uiState.collectAsState().value
+
+    LazyColumn(modifier = modifier.background(MaterialTheme.colorScheme.onPrimary)) {
         item {
-            GoBackTopAppBar(goBackOnClick = onBackButtonClick, goHomeOnClick = onHomeButtonClick)
+            GoBackTopAppBar(goBackOnClick = onBackClicked, goHomeOnClick = onHomeClicked)
         }
         item {
-            CountrySpecificStatistics(country = stringResource(R.string.statistics_screen_overall))
+            uiState.statistics["Overall"]?.let {
+                CountrySpecificStatistics(
+                    country = stringResource(R.string.statistics_screen_overall),
+                    statistics = it
+                )
+            }
         }
         items(DataSources.countries) { country ->
-            CountrySpecificStatistics(modifier = Modifier, country = country)
+            uiState.statistics[country]?.let {
+                CountrySpecificStatistics(
+                    modifier = Modifier,
+                    country = country,
+                    statistics = it
+                )
+            }
         }
     }
 }
@@ -56,6 +73,7 @@ fun OverallStatistics(
 fun CountrySpecificStatistics(
     modifier: Modifier = Modifier, country: String = "",
     attractionTypeIconContentDescription: String = "",
+    statistics: HashMap<String, Array<Float>>
 ) {
     Column(modifier = modifier) {
         Text(
@@ -68,23 +86,29 @@ fun CountrySpecificStatistics(
             )
         )
         LazyColumn(modifier = Modifier.height(dimensionResource(R.dimen.country_specific_statistics_height))) {
-            items(DataSources.types) { item ->
+            items(statistics.entries.toList()) { entry ->
+                val progress = entry.value[0] / entry.value[1]
+                val text = "${entry.value[0]}/${entry.value[1]}"
                 Row(
                     modifier = modifier.padding(bottom = dimensionResource(R.dimen.padding_small)),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(DataSources.typesIcons[item]!!),
+                        painter = painterResource(DataSources.typesIcons[entry.key]!!),
                         contentDescription = attractionTypeIconContentDescription,
                         modifier = Modifier.weight(0.30f)
                     )
                     Text(
-                        text = item,
+                        text = entry.key,
                         modifier = Modifier.weight(1f),
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    ProgressBar(modifier = Modifier.weight(1.5f), text = "0/10", progress = 0.75f)
+                    ProgressBar(
+                        modifier = Modifier.weight(1.5f),
+                        text = text,
+                        progress = progress
+                    )
                 }
             }
         }

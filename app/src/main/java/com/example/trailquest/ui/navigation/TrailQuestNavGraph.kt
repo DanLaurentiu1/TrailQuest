@@ -2,12 +2,20 @@ package com.example.trailquest.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.trailquest.ui.screens.attraction_screen.AttractionScreen
+import com.example.trailquest.ui.screens.attraction_screen.AttractionScreenViewModel
+import com.example.trailquest.ui.screens.country_screen.CountryScreen
+import com.example.trailquest.ui.screens.country_screen.CountryScreenViewModel
 import com.example.trailquest.ui.screens.main_screen.MainScreen
 import com.example.trailquest.ui.screens.profile_screen.UserProfileScreen
+import com.example.trailquest.ui.screens.profile_screen.UserProfileScreenViewModel
+import com.example.trailquest.ui.screens.statistics_screen.StatisticsScreen
+import com.example.trailquest.ui.screens.statistics_screen.StatisticsScreenViewModel
 
 @Composable
 fun TrailQuestNavHost(
@@ -21,47 +29,105 @@ fun TrailQuestNavHost(
     ) {
         composable<MainScreenClass> {
             MainScreen(
-                onSearchClick = { },
-                onQueryChange = { },
-                onActiveChange = { },
-                isSearchBarActive = false,
-                isHomeSelected = false,
-                isStatisticsSelected = false,
-                isProfileSelected = false,
-                onHomeClicked = { },
-                onStatisticsClicked = {
-                    navController.navigate(
-                        UserProfileScreenClass(
-                            userName = "HogRidaa",
-                            attractionsCompleted = 40f,
-                            attractionTotal = 123f,
-                            userTitle = "Adventurer",
-                            userLevel = 6,
-                            bioText = "I don't know",
-                            mostLikedCountries = listOf("Albania", "France", "Belgium"),
-                            mostLikedActivities = listOf("Zoo", "Nature", "Food")
-                        )
+                viewModel = viewModel(),
+                onHomeClicked = {
+                    navController.popBackStack(
+                        MainScreenClass,
+                        inclusive = false
                     )
                 },
-                onProfileClicked = {}
+                onStatisticsClicked = {
+                    navController.navigate(StatisticsScreenClass)
+                },
+                onProfileClicked = {
+                    navController.navigate(
+                        UserProfileScreenClass()
+                    )
+                },
+                onCountrySelected = { countryName ->
+                    navController.navigate(CountryScreenClass(countryName = countryName))
+                }
             )
         }
 
-        composable<UserProfileScreenClass> {
-            val args = it.toRoute<UserProfileScreenClass>()
+        composable<UserProfileScreenClass> { backStackEntry ->
+            val params = backStackEntry.toRoute<UserProfileScreenClass>()
+            val viewModel: UserProfileScreenViewModel = viewModel()
+            viewModel.setUiState(userName = params.userName)
             UserProfileScreen(
-                onBackButtonClick = { },
-                onHomeButtonClick = { },
-                onProfileButtonClick = { },
-                onStatisticsButtonClick = { },
-                userName = args.userName,
-                attractionsCompleted = args.attractionsCompleted,
-                attractionTotal = args.attractionTotal,
-                userTitle = args.userTitle,
-                userLevel = args.userLevel,
-                bioText = args.bioText,
-                mostLikedCountries = args.mostLikedCountries,
-                mostLikedActivities = args.mostLikedActivities
+                onBackClicked = { navController.navigateUp() },
+                onHomeClicked = {
+                    navController.popBackStack(
+                        MainScreenClass,
+                        inclusive = false
+                    )
+                },
+                onProfileClicked = {
+                    navController.navigate(
+                        UserProfileScreenClass()
+                    )
+                },
+                onStatisticsClicked = { navController.navigate(StatisticsScreenClass) },
+                viewModel = viewModel
+            )
+        }
+
+        composable<CountryScreenClass> { backStackEntry ->
+            val params = backStackEntry.toRoute<CountryScreenClass>()
+            val viewModel: CountryScreenViewModel = viewModel()
+            viewModel.setUiState(countryName = params.countryName)
+            CountryScreen(
+                onBackClicked = { navController.navigateUp() },
+                onHomeClicked = {
+                    navController.popBackStack(
+                        MainScreenClass,
+                        inclusive = false
+                    )
+                },
+                onAttractionClicked = { attractionName ->
+                    navController.navigate(
+                        AttractionScreenClass(
+                            attractionName = attractionName
+                        )
+                    )
+                },
+                viewModel = viewModel
+            )
+        }
+
+        composable<AttractionScreenClass> { backStackEntry ->
+            val params = backStackEntry.toRoute<AttractionScreenClass>()
+            val viewModel: AttractionScreenViewModel = viewModel()
+            viewModel.setUiState(attractionName = params.attractionName)
+            AttractionScreen(
+                onHomeClicked = {
+                    navController.popBackStack(
+                        MainScreenClass,
+                        inclusive = false
+                    )
+                },
+                onBackClicked = { navController.navigateUp() },
+                onStatisticsClicked = { navController.navigate(StatisticsScreenClass) },
+                onProfileClicked = {
+                    navController.navigate(
+                        UserProfileScreenClass()
+                    )
+                },
+                viewModel = viewModel
+            )
+        }
+
+        composable<StatisticsScreenClass> {
+            val viewModel: StatisticsScreenViewModel = viewModel()
+            StatisticsScreen(
+                onBackClicked = { navController.navigateUp() },
+                onHomeClicked = {
+                    navController.popBackStack(
+                        MainScreenClass,
+                        inclusive = false
+                    )
+                },
+                viewModel = viewModel
             )
         }
     }

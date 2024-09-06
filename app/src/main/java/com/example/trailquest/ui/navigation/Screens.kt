@@ -5,28 +5,27 @@ import kotlinx.serialization.Serializable
 @Serializable
 object MainScreenClass
 
-
 @Serializable
 data class CountryScreenClass(
-    val countryName: String,
-    val visitors: Int
+    val countryName: String
 )
 
 @Serializable
 data class AttractionScreenClass(
-    val attractionTitle: String,
-    val aboutText: String,
-    val isChecked: Boolean,
+    val attractionName: String
 )
 
 @Serializable
 data class UserProfileScreenClass(
-    val userName: String,
-    val attractionsCompleted: Float,
-    val attractionTotal: Float,
-    val userTitle: String,
-    val userLevel: Int,
-    val bioText: String,
-    val mostLikedCountries: List<String>,
-    val mostLikedActivities: List<String>
+    val userName: String = "Lau",
+    val attractionsCompleted: Float = 0f,
+    val attractionTotal: Float = 0f,
+    val userTitle: String = "",
+    val userLevel: Int = 0,
+    val bioText: String = "",
+    val mostLikedCountries: List<String> = listOf(),
+    val mostLikedActivities: List<String> = listOf()
 )
+
+@Serializable
+object StatisticsScreenClass

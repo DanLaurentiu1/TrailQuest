@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.trailquest.ui.AppViewModelProvider
 import com.example.trailquest.ui.screens.attraction_screen.AttractionScreen
 import com.example.trailquest.ui.screens.attraction_screen.AttractionScreenViewModel
 import com.example.trailquest.ui.screens.country_screen.CountryScreen
@@ -52,7 +53,8 @@ fun TrailQuestNavHost(
 
         composable<UserProfileScreenClass> { backStackEntry ->
             val params = backStackEntry.toRoute<UserProfileScreenClass>()
-            val viewModel: UserProfileScreenViewModel = viewModel()
+            val viewModel: UserProfileScreenViewModel =
+                viewModel(factory = AppViewModelProvider.Factory)
             viewModel.setUiState(userName = params.userName)
             UserProfileScreen(
                 onBackClicked = { navController.navigateUp() },

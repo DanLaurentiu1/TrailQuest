@@ -1,7 +1,7 @@
 package com.example.trailquest.ui.screens.main_screen
 
 import androidx.lifecycle.ViewModel
-import com.example.trailquest.data.datasource.DataSources
+import com.example.trailquest.data.DataSources
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 

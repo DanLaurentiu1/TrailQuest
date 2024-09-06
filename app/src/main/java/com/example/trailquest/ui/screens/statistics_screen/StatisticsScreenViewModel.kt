@@ -1,10 +1,15 @@
 package com.example.trailquest.ui.screens.statistics_screen
 
 import androidx.lifecycle.ViewModel
+import com.example.trailquest.data.repository.attraction.AttractionRepository
+import com.example.trailquest.data.repository.country.CountryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-class StatisticsScreenViewModel : ViewModel() {
+class StatisticsScreenViewModel(
+    countryRepository: CountryRepository,
+    attractionRepository: AttractionRepository
+) : ViewModel() {
     var uiState = MutableStateFlow(StatisticsScreenUiState())
         private set
 

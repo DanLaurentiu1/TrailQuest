@@ -1,10 +1,11 @@
 package com.example.trailquest.ui.screens.country_screen
 
 import androidx.lifecycle.ViewModel
+import com.example.trailquest.data.repository.country.CountryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-class CountryScreenViewModel : ViewModel() {
+class CountryScreenViewModel(countryRepository: CountryRepository) : ViewModel() {
     var uiState = MutableStateFlow(CountryScreenUiState())
         private set
 

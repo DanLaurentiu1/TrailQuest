@@ -1,11 +1,15 @@
 package com.example.trailquest
 
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.trailquest.ui.navigation.TrailQuestNavHost
+import android.app.Application
+import com.example.trailquest.data.AppContainer
+import com.example.trailquest.data.AppDataContainer
 
-@Composable
-fun TrailQuestApplication(navController: NavHostController = rememberNavController()) {
-    TrailQuestNavHost(navController = navController)
+class TrailQuestApplication : Application() {
+
+    lateinit var container: AppContainer
+
+    override fun onCreate() {
+        super.onCreate()
+        container = AppDataContainer(this)
+    }
 }

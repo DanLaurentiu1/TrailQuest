@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
                                 mapStyleOptions = MapStyleOptions(stringResource(R.string.map_style))
                             )
                         )
-                        TrailQuestApplication()
+                        TrailQuestApp()
                     }
                 }
             }

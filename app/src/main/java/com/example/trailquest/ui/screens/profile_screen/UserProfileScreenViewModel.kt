@@ -1,17 +1,21 @@
 package com.example.trailquest.ui.screens.profile_screen
 
 import androidx.lifecycle.ViewModel
+import com.example.trailquest.data.repository.attraction.AttractionRepository
+import com.example.trailquest.data.repository.user.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-class UserProfileScreenViewModel : ViewModel() {
+class UserProfileScreenViewModel(
+    usersRepository: UserRepository,
+    attractionRepository: AttractionRepository,
+) : ViewModel() {
     var uiState = MutableStateFlow(UserProfileScreenUiState())
         private set
 
     init {
         //Database
         uiState.value = UserProfileScreenUiState()
-
         // query for getting the user Data
         // setUiState with the data that I am getting
     }

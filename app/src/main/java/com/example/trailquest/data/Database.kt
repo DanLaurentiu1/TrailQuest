@@ -15,7 +15,7 @@ import com.example.trailquest.data.entities.User
 
 @Database(
     entities = [User::class, Attraction::class, Type::class, Country::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class TrailQuestDatabase : RoomDatabase() {

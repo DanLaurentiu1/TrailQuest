@@ -1,5 +1,6 @@
 package com.example.trailquest.data.entities
 
+import androidx.annotation.DrawableRes
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -31,5 +32,4 @@ data class Attraction(
     val completed: Boolean,
     val countryId: Int,
     val typeId: Int
-    // @DrawableRes val image: Int
 )

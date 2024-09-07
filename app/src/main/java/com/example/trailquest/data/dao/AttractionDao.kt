@@ -15,6 +15,12 @@ interface AttractionDao {
     @Query("SELECT * from Attractions WHERE name = :name")
     fun getAttractionByName(name: String): Flow<Attraction>
 
+    @Query("SELECT * from Attractions where countryId = :countryId")
+    fun getAttractionWithCountryId(countryId: Int): Flow<List<Attraction>>
+
+    @Query("SELECT * from Attractions where countryId = :countryId and typeId = :typeId")
+    fun getAttractionsByCountryAndType(countryId: Int, typeId: Int): Flow<List<Attraction>>
+
     @Upsert
     suspend fun upsert(attraction: Attraction)
 

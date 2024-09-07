@@ -8,6 +8,8 @@ interface AttractionRepository {
 
     fun getAttractionByName(name: String): Flow<Attraction>
 
+    fun getAttractionsByCountryAndType(countryId: Int, typeId: Int): Flow<List<Attraction>>
+
     suspend fun upsert(attraction: Attraction)
 
     suspend fun delete(attraction: Attraction)

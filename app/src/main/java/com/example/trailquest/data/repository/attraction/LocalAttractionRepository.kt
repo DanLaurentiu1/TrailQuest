@@ -13,6 +13,13 @@ class LocalAttractionRepository(private val attractionDao: AttractionDao) : Attr
         return attractionDao.getAttractionByName(name)
     }
 
+    override fun getAttractionsByCountryAndType(
+        countryId: Int,
+        typeId: Int
+    ): Flow<List<Attraction>> {
+        return attractionDao.getAttractionsByCountryAndType(countryId = countryId, typeId = typeId)
+    }
+
     override suspend fun upsert(attraction: Attraction) {
         return attractionDao.upsert(attraction)
     }

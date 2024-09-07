@@ -183,8 +183,8 @@ fun FilterButtons(modifier: Modifier = Modifier) {
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        items(DataSources.types) { item ->
-            FilterButton(text = item, onFilterButtonClick = {})
+        items(DataSources.typesIcons.entries.toList()) { entry ->
+            FilterButton(text = entry.key, onFilterButtonClick = {})
         }
     }
 }

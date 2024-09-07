@@ -3,26 +3,6 @@ package com.example.trailquest.data
 import com.example.trailquest.R
 
 object DataSources {
-    val types = listOf(
-        "Restaurants",
-        "Historical Sites",
-        "Art Galleries",
-        "Shopping",
-        "Landmarks",
-        "Cultural Centers",
-        "Beaches",
-        "Zoos",
-        "Nature Landmarks",
-        "Amusement Parks",
-        "Religious Sites",
-        "Castles",
-        "Breweries",
-        "Hiking Trails",
-        "Events",
-        "Cruises",
-        "Nightlife"
-    )
-
     val typesIcons = hashMapOf(
         "Restaurants" to R.drawable.rounded_restaurant_24,
         "Historical Sites" to R.drawable.historical_site_icon,
@@ -94,24 +74,5 @@ object DataSources {
         "Turkey",
         "Ukraine",
         "United Kingdom",
-        "Vatican City"
     )
-
-    val navigationRailItems = hashMapOf(
-        "Back" to R.drawable.rounded_arrow_back_24,
-        "Home" to R.drawable.rounded_home_24,
-    )
-
-
-    val levelTitles = hashMapOf(
-        1 to "Newbie",
-        2 to "Rookie",
-        3 to "Explorer",
-        4 to "Journeyman",
-        5 to "Traveler",
-        6 to "Adventurer",
-        7 to "Seasoned Adventurer",
-    )
-
-    val attractions = listOf("Mount1", "Attraction1", "Zoo1", "Beach1", "Beach2")
 }

@@ -43,6 +43,25 @@ class CountryScreenViewModel(
         return typeRepository.getAllTypes().first()
     }
 
+    fun createAttraction(
+        attractionName: String,
+        attractionAboutText: String,
+        countryName: String,
+        typeId: Int
+    ) {
+        viewModelScope.launch {
+            attractionRepository.upsert(
+                Attraction(
+                    name = attractionName,
+                    description = attractionAboutText,
+                    completed = false,
+                    countryId = countryRepository.getCountryByName(countryName).first().id,
+                    typeId = typeId
+                )
+            )
+        }
+    }
+
     fun resetUiState(countryName: String) {
         viewModelScope.launch {
             val country = getCountryFromDatabase(countryName)

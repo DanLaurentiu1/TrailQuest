@@ -7,20 +7,28 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +42,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.entities.Attraction
+import com.example.trailquest.ui.reusable_components.DialogBox
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 
 @Preview
@@ -63,7 +72,8 @@ fun CountryScreen(
         item {
             CountryInformationSection(
                 countryName = uiState.countryName,
-                visitors = uiState.countryVisitors
+                visitors = uiState.countryVisitors,
+                stars = uiState.countryStars
             )
         }
         items(uiState.countryAttractions.entries.toList()) { entry ->
@@ -71,7 +81,16 @@ fun CountryScreen(
                 modifier = Modifier,
                 attractionTypeName = entry.key.name,
                 onAttractionClicked = onAttractionClicked,
-                attractions = entry.value
+                attractions = entry.value,
+                onCreateAttraction = { attractionName, attractionDescription ->
+                    viewModel.createAttraction(
+                        attractionName = attractionName,
+                        attractionAboutText = attractionDescription,
+                        countryName = viewModel.uiState.value.countryName,
+                        typeId = entry.key.id
+                    )
+                },
+                onDeleteAttraction = {}
             )
         }
     }
@@ -82,8 +101,10 @@ fun CountryInformationSection(
     modifier: Modifier = Modifier,
     countryName: String,
     starContentDescription: String = "",
-    visitors: Int
+    visitors: Int,
+    stars: Float
 ) {
+    var starsRemaining = stars
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
@@ -102,10 +123,18 @@ fun CountryInformationSection(
                     modifier = Modifier.padding(end = dimensionResource(R.dimen.country_screen_country_name_padding_end))
                 )
                 for (i in 1..5) {
-                    Icon(
-                        painter = painterResource(R.drawable.star_icon),
-                        contentDescription = starContentDescription
-                    )
+                    if (starsRemaining-- > 1f) {
+                        Icon(
+                            imageVector = Icons.Filled.Star,
+                            contentDescription = starContentDescription,
+                            tint = Color(0xFFFFC700)
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = starContentDescription,
+                        )
+                    }
                 }
             }
             Text(text = stringResource(R.string.country_screen_visitors, visitors))
@@ -117,50 +146,70 @@ fun CountryInformationSection(
 fun AttractionTypeSection(
     modifier: Modifier = Modifier, attractionTypeName: String,
     onAttractionClicked: (String) -> Unit,
-    attractions: List<Attraction>
+    attractions: List<Attraction>,
+    onCreateAttraction: (String, String) -> Unit,
+    onDeleteAttraction: () -> Unit
 ) {
-    ElevatedCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(
-                vertical = dimensionResource(R.dimen.attraction_screen_attraction_type_card_padding_vertical),
-                horizontal = dimensionResource(R.dimen.attraction_screen_attraction_type_card_padding_horizontal)
-            )
-    ) {
-        Column(modifier = Modifier) {
-            Text(
-                text = attractionTypeName,
-                modifier = Modifier.padding(
-                    bottom = dimensionResource(R.dimen.attraction_screen_attraction_type_name_padding_bottom),
-                    top = dimensionResource(R.dimen.attraction_screen_attraction_type_name_padding_top),
-                    start = dimensionResource(R.dimen.attraction_screen_attraction_type_name_padding_start)
-                ),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-            for (attraction in attractions) {
-                ElevatedCard(
-                    shape = RectangleShape,
-                    modifier = Modifier.clickable(onClick = { onAttractionClicked(attraction.name) })
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = dimensionResource(R.dimen.attraction_screen_attraction_padding_horizontal),
-                                end = dimensionResource(R.dimen.attraction_screen_attraction_padding_horizontal),
-                                bottom = dimensionResource(R.dimen.attraction_screen_attraction_padding_bottom)
-                            ),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+    var isDialogOpen by remember {
+        mutableStateOf(false)
+    }
+
+    if (isDialogOpen) {
+        DialogBox(onAddAttraction = onCreateAttraction,
+            onDismiss = { isDialogOpen = false })
+    } else {
+        ElevatedCard(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(
+                    vertical = dimensionResource(R.dimen.attraction_screen_attraction_type_card_padding_vertical),
+                    horizontal = dimensionResource(R.dimen.attraction_screen_attraction_type_card_padding_horizontal)
+                )
+        ) {
+            Column(modifier = Modifier) {
+                Row {
+                    Text(
+                        text = attractionTypeName,
+                        modifier = Modifier.padding(
+                            bottom = dimensionResource(R.dimen.attraction_screen_attraction_type_name_padding_bottom),
+                            top = dimensionResource(R.dimen.attraction_screen_attraction_type_name_padding_top),
+                            start = dimensionResource(R.dimen.attraction_screen_attraction_type_name_padding_start)
+                        ),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    IconButton(onClick = { isDialogOpen = true }) {
+                        Icon(
+                            painter = painterResource(R.drawable.add_icon),
+                            contentDescription = ""
+                        )
+                    }
+                }
+                for (attraction in attractions) {
+                    ElevatedCard(
+                        shape = RectangleShape,
+                        modifier = Modifier.clickable(onClick = { onAttractionClicked(attraction.name) })
                     ) {
-                        Text(
-                            text = attraction.name, style = MaterialTheme.typography.bodyLarge
-                        )
-                        AttractionStatusSection(
-                            modifier = Modifier,
-                            isCompleted = attraction.completed
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = dimensionResource(R.dimen.attraction_screen_attraction_padding_horizontal),
+                                    end = dimensionResource(R.dimen.attraction_screen_attraction_padding_horizontal),
+                                    bottom = dimensionResource(R.dimen.attraction_screen_attraction_padding_bottom)
+                                ),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = attraction.name, style = MaterialTheme.typography.bodyLarge
+                            )
+                            AttractionStatusSection(
+                                modifier = Modifier,
+                                isCompleted = attraction.completed
+                            )
+                        }
                     }
                 }
             }

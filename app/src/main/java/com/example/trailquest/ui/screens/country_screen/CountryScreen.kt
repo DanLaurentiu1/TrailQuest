@@ -34,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.DataSources
+import com.example.trailquest.data.entities.Attraction
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 
 @Preview
@@ -66,11 +67,12 @@ fun CountryScreen(
                 visitors = uiState.countryVisitors
             )
         }
-        items(DataSources.types) { type ->
+        items(uiState.countryAttractions.entries.toList()) { entry ->
             AttractionTypeSection(
                 modifier = Modifier,
-                attractionTypeName = type,
-                onAttractionClicked = onAttractionClicked
+                attractionTypeName = entry.key.name,
+                onAttractionClicked = onAttractionClicked,
+                attractions = entry.value
             )
         }
     }
@@ -115,7 +117,8 @@ fun CountryInformationSection(
 @Composable
 fun AttractionTypeSection(
     modifier: Modifier = Modifier, attractionTypeName: String,
-    onAttractionClicked: (String) -> Unit
+    onAttractionClicked: (String) -> Unit,
+    attractions: List<Attraction>
 ) {
     ElevatedCard(
         modifier = modifier
@@ -136,10 +139,10 @@ fun AttractionTypeSection(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
-            for (attraction in DataSources.attractions) {
+            for (attraction in attractions) {
                 ElevatedCard(
                     shape = RectangleShape,
-                    modifier = Modifier.clickable(onClick = { onAttractionClicked(attraction) })
+                    modifier = Modifier.clickable(onClick = { onAttractionClicked(attraction.name) })
                 ) {
                     Row(
                         modifier = Modifier
@@ -153,9 +156,12 @@ fun AttractionTypeSection(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = attraction, style = MaterialTheme.typography.bodyLarge
+                            text = attraction.name, style = MaterialTheme.typography.bodyLarge
                         )
-                        AttractionStatusSection(modifier = Modifier, isCompleted = false)
+                        AttractionStatusSection(
+                            modifier = Modifier,
+                            isCompleted = attraction.completed
+                        )
                     }
                 }
             }

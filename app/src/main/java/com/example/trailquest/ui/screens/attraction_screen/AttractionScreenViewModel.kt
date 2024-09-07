@@ -2,35 +2,57 @@ package com.example.trailquest.ui.screens.attraction_screen
 
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.trailquest.data.entities.Attraction
+import com.example.trailquest.data.entities.Type
 import com.example.trailquest.data.repository.attraction.AttractionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class AttractionScreenViewModel(attractionRepository: AttractionRepository) : ViewModel() {
+class AttractionScreenViewModel(private val attractionRepository: AttractionRepository) :
+    ViewModel() {
     var uiState = MutableStateFlow(AttractionScreenUiState())
         private set
 
     init {
-        //Database
         uiState.value = AttractionScreenUiState()
-
-        // query for getting the user Data
-        // setUiState with the data that I am getting
     }
 
-    fun setUiState(
-        attractionName: String = "",
-        @DrawableRes attractionPicture: Int = 0,
-        aboutText: String = "",
-        isCompleted: Boolean = false
-    ) {
-        uiState.update {
-            it.copy(
-                attractionName = attractionName,
-                attractionPicture = attractionPicture,
-                aboutText = aboutText,
-                isCompleted = isCompleted
+    private suspend fun getAttractionByName(attractionName: String): Attraction {
+        return attractionRepository.getAttractionByName(attractionName).first()
+    }
+
+    fun checkAttraction() {
+        viewModelScope.launch {
+            attractionRepository.upsert(
+                Attraction(
+                    id = uiState.value.attractionId,
+                    name = uiState.value.attractionName,
+                    description = uiState.value.aboutText,
+                    completed = !uiState.value.isCompleted,
+                    countryId = uiState.value.countryId,
+                    typeId = uiState.value.typeId
+                )
             )
+        }
+        resetUiState(attractionName = uiState.value.attractionName)
+    }
+
+    fun resetUiState(attractionName: String) {
+        viewModelScope.launch {
+            uiState.update {
+                val attraction = getAttractionByName(attractionName)
+                it.copy(
+                    attractionId = attraction.id,
+                    attractionName = attraction.name,
+                    isCompleted = attraction.completed,
+                    aboutText = attraction.description,
+                    countryId = attraction.countryId,
+                    typeId = attraction.typeId
+                )
+            }
         }
     }
 }

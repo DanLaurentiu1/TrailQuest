@@ -56,9 +56,11 @@ fun AttractionScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState().value
 
-    Column(modifier = modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.onPrimary)) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.onPrimary)
+    ) {
         GoBackTopAppBar(goBackOnClick = onBackClicked, goHomeOnClick = onHomeClicked)
         AttractionTitleSection(
             modifier = Modifier.weight(1f),
@@ -71,7 +73,7 @@ fun AttractionScreen(
                 .padding(dimensionResource(R.dimen.attraction_screen_about_me_section_padding)),
             aboutText = uiState.aboutText,
             isChecked = uiState.isCompleted,
-            onChecked = { /* VIEW MODEL HERE */ }
+            onChecked = { viewModel.checkAttraction() }
         )
         CustomNavigationBar(
             modifier = Modifier,
@@ -93,7 +95,7 @@ fun AttractionTitleSection(
 ) {
     Box(modifier = modifier) {
         Image(
-            painter = painterResource(id = R.drawable.android_superhero1),
+            painter = painterResource(id = R.drawable.blue_lagoon),
             contentDescription = contentDescription,
             contentScale = ContentScale.FillWidth
         )

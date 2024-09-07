@@ -19,7 +19,7 @@
 
     <!--Progress Bar-->
     <dimen name="progress_bar_height">24dp</dimen>
-    <dimen name="progress_bar_width">200dp</dimen>
+    <dimen name="progress_bar_width">232dp</dimen>
     <dimen name="progress_bar_border">1dp</dimen>
 
     <!--Corner Shapes-->
@@ -83,4 +83,15 @@
     <dimen name="statistics_screen_country_name_padding_vertical">6dp</dimen>
     <dimen name="statistics_screen_country_name_padding_horizontal">20dp</dimen>
 
+    <!--Dialog Box-->
+    <dimen name="dialog_box_card_height">268dp</dimen>
+    <dimen name="dialog_box_card_padding">16dp</dimen>
+    <dimen name="dialog_box_card_shape">16dp</dimen>
+    <dimen name="dialog_box_button_width">80dp</dimen>
+    <dimen name="dialog_box_button_height">40dp</dimen>
+    <dimen name="dialog_box_column_vertical_padding">16dp</dimen>
+    <dimen name="dialog_box_column_horizontal_padding">28dp</dimen>
+    <dimen name="dialog_box_button_padding">0dp</dimen>
+    <dimen name="dialog_box_upper_text_field_bottom_padding">8dp</dimen>
+    <dimen name="dialog_box_lower_text_field_bottom_padding">12dp</dimen>
 </resources>

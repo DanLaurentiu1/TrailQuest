@@ -283,4 +283,13 @@
     <!--User Profile Screen-->
     <string name="statistics_screen_overall">Overall</string>
 
+    <!--Dialog Box-->
+    <string name="attraction_name_label_text">Attraction Name</string>
+    <string name="attraction_description_label_text">Attraction Description</string>
+    <string name="add_button_text">Add</string>
+    <string name="cancel_button_text">Cancel</string>
+
+    <!--Content Description-->
+    <string name="attraction_add_icon">You can add an attraction by clicking this button</string>
+
 </resources>

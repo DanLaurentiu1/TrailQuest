@@ -90,7 +90,7 @@ fun CountryScreen(
                         typeId = entry.key.id
                     )
                 },
-                onDeleteAttraction = {}
+                onDeleteAttraction = { /* TODO */ }
             )
         }
     }
@@ -182,7 +182,7 @@ fun AttractionTypeSection(
                     IconButton(onClick = { isDialogOpen = true }) {
                         Icon(
                             painter = painterResource(R.drawable.add_icon),
-                            contentDescription = ""
+                            contentDescription = stringResource(R.string.attraction_add_icon)
                         )
                     }
                 }

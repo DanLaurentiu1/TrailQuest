@@ -39,8 +39,7 @@ private fun AttractionScreenPreview() {
             onHomeClicked = {},
             onBackClicked = {},
             onProfileClicked = {},
-            onStatisticsClicked = {},
-            viewModel = viewModel()
+            onStatisticsClicked = {}
         )
     }
 }

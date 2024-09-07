@@ -53,7 +53,7 @@ fun StatisticsScreen(
             GoBackTopAppBar(goBackOnClick = onBackClicked, goHomeOnClick = onHomeClicked)
         }
         item {
-            uiState.statistics["Overall"]?.let {
+            uiState.statistics[stringResource(R.string.statistics_screen_overall)]?.let {
                 CountrySpecificStatistics(
                     country = stringResource(R.string.statistics_screen_overall),
                     statistics = it

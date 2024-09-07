@@ -21,6 +21,18 @@ interface AttractionDao {
     @Query("SELECT * from Attractions where countryId = :countryId and typeId = :typeId")
     fun getAttractionsByCountryAndType(countryId: Int, typeId: Int): Flow<List<Attraction>>
 
+    @Query("SELECT COUNT(*) from Attractions where typeId = :typeId and completed = 1")
+    fun getNumberOfCompletedAttractionsByType(typeId: Int): Flow<Float>
+
+    @Query("SELECT COUNT(*) from Attractions where typeId = :typeId")
+    fun getNumberOfTotalAttractionsByType(typeId: Int): Flow<Float>
+
+    @Query("SELECT COUNT(*) from Attractions where typeId = :typeId and countryId = :countryId and  completed = 1")
+    fun getNumberOfCompletedAttractionsByTypeAndCountry(typeId: Int, countryId: Int): Flow<Float>
+
+    @Query("SELECT COUNT(*) from Attractions where typeId = :typeId and countryId = :countryId")
+    fun getNumberOfTotalAttractionsByTypeAndCountry(typeId: Int, countryId: Int): Flow<Float>
+
     @Upsert
     suspend fun upsert(attraction: Attraction)
 

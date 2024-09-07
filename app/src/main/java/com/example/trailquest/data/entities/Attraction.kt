@@ -1,6 +1,5 @@
 package com.example.trailquest.data.entities
 
-import androidx.annotation.DrawableRes
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey

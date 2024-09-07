@@ -1,63 +1,10 @@
 package com.example.trailquest.ui.screens.statistics_screen
 
+import com.example.trailquest.data.entities.Country
+import com.example.trailquest.data.entities.Type
+
+
 data class StatisticsScreenUiState(
-    val statistics: HashMap<String, HashMap<String, Array<Float>>> = hashMapOf(
-        "Overall" to hashMapOf(
-            "Restaurants" to arrayOf(5f, 10f),
-            "Historical Sites" to arrayOf(2f, 10f),
-            "Art Galleries" to arrayOf(0f, 10f),
-            "Shopping" to arrayOf(1f, 10f),
-            "Landmarks" to arrayOf(2f, 10f),
-            "Cultural Centers" to arrayOf(10f, 10f),
-            "Beaches" to arrayOf(9f, 10f),
-            "Zoos" to arrayOf(7f, 10f),
-            "Nature Landmarks" to arrayOf(4f, 10f),
-            "Amusement Parks" to arrayOf(1f, 10f),
-            "Religious Sites" to arrayOf(2f, 10f),
-            "Castles" to arrayOf(8f, 10f),
-            "Breweries" to arrayOf(2f, 10f),
-            "Hiking Trails" to arrayOf(0f, 10f),
-            "Events" to arrayOf(0f, 10f),
-            "Cruises" to arrayOf(9f, 10f),
-            "Nightlife" to arrayOf(10f, 10f),
-        ),
-        "Albania" to hashMapOf(
-            "Restaurants" to arrayOf(0f, 10f),
-            "Historical Sites" to arrayOf(0f, 10f),
-            "Art Galleries" to arrayOf(0f, 10f),
-            "Shopping" to arrayOf(0f, 10f),
-            "Landmarks" to arrayOf(0f, 10f),
-            "Cultural Centers" to arrayOf(0f, 10f),
-            "Beaches" to arrayOf(0f, 10f),
-            "Zoos" to arrayOf(0f, 10f),
-            "Nature Landmarks" to arrayOf(0f, 10f),
-            "Amusement Parks" to arrayOf(0f, 10f),
-            "Religious Sites" to arrayOf(0f, 10f),
-            "Castles" to arrayOf(0f, 10f),
-            "Breweries" to arrayOf(0f, 10f),
-            "Hiking Trails" to arrayOf(0f, 10f),
-            "Events" to arrayOf(0f, 10f),
-            "Cruises" to arrayOf(0f, 10f),
-            "Nightlife" to arrayOf(0f, 10f),
-        ),
-        "Andorra" to hashMapOf(
-            "Restaurants" to arrayOf(0f, 10f),
-            "Historical Sites" to arrayOf(0f, 10f),
-            "Art Galleries" to arrayOf(0f, 10f),
-            "Shopping" to arrayOf(0f, 10f),
-            "Landmarks" to arrayOf(0f, 10f),
-            "Cultural Centers" to arrayOf(0f, 10f),
-            "Beaches" to arrayOf(0f, 10f),
-            "Zoos" to arrayOf(0f, 10f),
-            "Nature Landmarks" to arrayOf(0f, 10f),
-            "Amusement Parks" to arrayOf(0f, 10f),
-            "Religious Sites" to arrayOf(0f, 10f),
-            "Castles" to arrayOf(0f, 10f),
-            "Breweries" to arrayOf(0f, 10f),
-            "Hiking Trails" to arrayOf(0f, 10f),
-            "Events" to arrayOf(0f, 10f),
-            "Cruises" to arrayOf(0f, 10f),
-            "Nightlife" to arrayOf(0f, 10f),
-        )
-    )
+    val statistics: HashMap<String, HashMap<Type, Array<Float>>> = hashMapOf(),
+    val allCountries: List<Country> = listOf()
 )

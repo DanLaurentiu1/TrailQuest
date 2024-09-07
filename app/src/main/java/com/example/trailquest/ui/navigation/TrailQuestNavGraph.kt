@@ -122,6 +122,7 @@ fun TrailQuestNavHost(
         composable<StatisticsScreenClass> {
             val viewModel: StatisticsScreenViewModel =
                 viewModel(factory = AppViewModelProvider.Factory)
+            viewModel.resetUiState()
             StatisticsScreen(
                 onBackClicked = { navController.navigateUp() },
                 onHomeClicked = {

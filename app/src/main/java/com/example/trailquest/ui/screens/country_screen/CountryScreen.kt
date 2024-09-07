@@ -33,7 +33,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.AppTheme
 import com.example.trailquest.R
-import com.example.trailquest.data.DataSources
 import com.example.trailquest.data.entities.Attraction
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 

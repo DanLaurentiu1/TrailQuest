@@ -1,10 +1,8 @@
 package com.example.trailquest.ui.screens.attraction_screen
 
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trailquest.data.entities.Attraction
-import com.example.trailquest.data.entities.Type
 import com.example.trailquest.data.repository.attraction.AttractionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first

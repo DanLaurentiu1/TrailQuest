@@ -20,6 +20,34 @@ class LocalAttractionRepository(private val attractionDao: AttractionDao) : Attr
         return attractionDao.getAttractionsByCountryAndType(countryId = countryId, typeId = typeId)
     }
 
+    override fun getNumberOfCompletedAttractionsByType(typeId: Int): Flow<Float> {
+        return attractionDao.getNumberOfCompletedAttractionsByType(typeId = typeId)
+    }
+
+    override fun getNumberOfTotalAttractionsByType(typeId: Int): Flow<Float> {
+        return attractionDao.getNumberOfTotalAttractionsByType(typeId = typeId)
+    }
+
+    override fun getNumberOfCompletedAttractionsByTypeAndCountry(
+        typeId: Int,
+        countryId: Int
+    ): Flow<Float> {
+        return attractionDao.getNumberOfCompletedAttractionsByTypeAndCountry(
+            typeId = typeId,
+            countryId = countryId
+        )
+    }
+
+    override fun getNumberOfTotalAttractionsByTypeAndCountry(
+        typeId: Int,
+        countryId: Int
+    ): Flow<Float> {
+        return attractionDao.getNumberOfTotalAttractionsByTypeAndCountry(
+            typeId = typeId,
+            countryId = countryId
+        )
+    }
+
     override suspend fun upsert(attraction: Attraction) {
         return attractionDao.upsert(attraction)
     }

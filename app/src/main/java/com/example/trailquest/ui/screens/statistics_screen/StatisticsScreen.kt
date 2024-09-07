@@ -1,5 +1,6 @@
 package com.example.trailquest.ui.screens.statistics_screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.AppTheme
 import com.example.trailquest.R
 import com.example.trailquest.data.DataSources
+import com.example.trailquest.data.entities.Type
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
 import com.example.trailquest.ui.reusable_components.ProgressBar
 
@@ -36,6 +38,7 @@ fun StatisticsScreenPreview() {
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun StatisticsScreen(
     modifier: Modifier = Modifier,
@@ -57,11 +60,11 @@ fun StatisticsScreen(
                 )
             }
         }
-        items(DataSources.countries) { country ->
-            uiState.statistics[country]?.let {
+        items(uiState.allCountries) { country ->
+            uiState.statistics[country.name]?.let {
                 CountrySpecificStatistics(
                     modifier = Modifier,
-                    country = country,
+                    country = country.name,
                     statistics = it
                 )
             }
@@ -73,7 +76,7 @@ fun StatisticsScreen(
 fun CountrySpecificStatistics(
     modifier: Modifier = Modifier, country: String = "",
     attractionTypeIconContentDescription: String = "",
-    statistics: HashMap<String, Array<Float>>
+    statistics: HashMap<Type, Array<Float>>
 ) {
     Column(modifier = modifier) {
         Text(
@@ -95,12 +98,12 @@ fun CountrySpecificStatistics(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(DataSources.typesIcons[entry.key]!!),
+                        painter = painterResource(DataSources.typesIcons[entry.key.name]!!),
                         contentDescription = attractionTypeIconContentDescription,
                         modifier = Modifier.weight(0.30f)
                     )
                     Text(
-                        text = entry.key,
+                        text = entry.key.name,
                         modifier = Modifier.weight(1f),
                         style = MaterialTheme.typography.bodyMedium
                     )

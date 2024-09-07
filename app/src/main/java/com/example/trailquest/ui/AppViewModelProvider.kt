@@ -33,7 +33,8 @@ object AppViewModelProvider {
         initializer {
             StatisticsScreenViewModel(
                 trailQuestApplication().container.countryRepository,
-                trailQuestApplication().container.attractionRepository
+                trailQuestApplication().container.attractionRepository,
+                trailQuestApplication().container.typeRepository
             )
         }
     }

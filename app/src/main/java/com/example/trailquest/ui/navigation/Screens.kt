@@ -16,16 +16,7 @@ data class AttractionScreenClass(
 )
 
 @Serializable
-data class UserProfileScreenClass(
-    val userName: String = "Lau",
-    val attractionsCompleted: Float = 0f,
-    val attractionTotal: Float = 0f,
-    val userTitle: String = "",
-    val userLevel: Int = 0,
-    val bioText: String = "",
-    val mostLikedCountries: List<String> = listOf(),
-    val mostLikedActivities: List<String> = listOf()
-)
+object UserProfileScreenClass
 
 @Serializable
 object StatisticsScreenClass

@@ -42,7 +42,7 @@ fun TrailQuestNavHost(
                 },
                 onProfileClicked = {
                     navController.navigate(
-                        UserProfileScreenClass()
+                        UserProfileScreenClass
                     )
                 },
                 onCountrySelected = { countryName ->
@@ -51,11 +51,9 @@ fun TrailQuestNavHost(
             )
         }
 
-        composable<UserProfileScreenClass> { backStackEntry ->
-            val params = backStackEntry.toRoute<UserProfileScreenClass>()
+        composable<UserProfileScreenClass> {
             val viewModel: UserProfileScreenViewModel =
                 viewModel(factory = AppViewModelProvider.Factory)
-            viewModel.setUiState(userName = params.userName)
             UserProfileScreen(
                 onBackClicked = { navController.navigateUp() },
                 onHomeClicked = {
@@ -66,7 +64,7 @@ fun TrailQuestNavHost(
                 },
                 onProfileClicked = {
                     navController.navigate(
-                        UserProfileScreenClass()
+                        UserProfileScreenClass
                     )
                 },
                 onStatisticsClicked = { navController.navigate(StatisticsScreenClass) },
@@ -76,8 +74,9 @@ fun TrailQuestNavHost(
 
         composable<CountryScreenClass> { backStackEntry ->
             val params = backStackEntry.toRoute<CountryScreenClass>()
-            val viewModel: CountryScreenViewModel = viewModel()
-            viewModel.setUiState(countryName = params.countryName)
+            val viewModel: CountryScreenViewModel =
+                viewModel(factory = AppViewModelProvider.Factory)
+            viewModel.resetUiState(countryName = params.countryName)
             CountryScreen(
                 onBackClicked = { navController.navigateUp() },
                 onHomeClicked = {
@@ -99,8 +98,9 @@ fun TrailQuestNavHost(
 
         composable<AttractionScreenClass> { backStackEntry ->
             val params = backStackEntry.toRoute<AttractionScreenClass>()
-            val viewModel: AttractionScreenViewModel = viewModel()
-            viewModel.setUiState(attractionName = params.attractionName)
+            val viewModel: AttractionScreenViewModel =
+                viewModel(factory = AppViewModelProvider.Factory)
+            viewModel.resetUiState(attractionName = params.attractionName)
             AttractionScreen(
                 onHomeClicked = {
                     navController.popBackStack(
@@ -112,7 +112,7 @@ fun TrailQuestNavHost(
                 onStatisticsClicked = { navController.navigate(StatisticsScreenClass) },
                 onProfileClicked = {
                     navController.navigate(
-                        UserProfileScreenClass()
+                        UserProfileScreenClass
                     )
                 },
                 viewModel = viewModel
@@ -120,7 +120,8 @@ fun TrailQuestNavHost(
         }
 
         composable<StatisticsScreenClass> {
-            val viewModel: StatisticsScreenViewModel = viewModel()
+            val viewModel: StatisticsScreenViewModel =
+                viewModel(factory = AppViewModelProvider.Factory)
             StatisticsScreen(
                 onBackClicked = { navController.navigateUp() },
                 onHomeClicked = {

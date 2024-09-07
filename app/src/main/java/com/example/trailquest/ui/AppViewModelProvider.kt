@@ -24,7 +24,11 @@ object AppViewModelProvider {
             )
         }
         initializer {
-            CountryScreenViewModel(trailQuestApplication().container.countryRepository)
+            CountryScreenViewModel(
+                trailQuestApplication().container.countryRepository,
+                trailQuestApplication().container.attractionRepository,
+                trailQuestApplication().container.typeRepository
+            )
         }
         initializer {
             StatisticsScreenViewModel(
@@ -37,13 +41,3 @@ object AppViewModelProvider {
 
 fun CreationExtras.trailQuestApplication(): TrailQuestApplication =
     (this[AndroidViewModelFactory.APPLICATION_KEY] as TrailQuestApplication)
-
-
-/*
-
-initializer {
-MainScreenViewModel(
-inventoryApplication().container.itemsRepository
-)
-}
-*/

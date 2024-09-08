@@ -60,9 +60,20 @@ class CountryScreenViewModel(
                 )
             )
         }
+        initCountry(uiState.value.countryName)
     }
 
-    fun resetUiState(countryName: String) {
+    fun deleteAttraction(
+        attractionName: String
+    ) {
+        viewModelScope.launch {
+            val attraction = attractionRepository.getAttractionByName(attractionName).first()
+            attractionRepository.delete(attraction)
+        }
+        initCountry(uiState.value.countryName)
+    }
+
+    fun initCountry(countryName: String) {
         viewModelScope.launch {
             val country = getCountryFromDatabase(countryName)
             val allTypes = getAllTypes()

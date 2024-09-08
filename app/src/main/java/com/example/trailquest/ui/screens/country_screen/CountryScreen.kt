@@ -1,8 +1,6 @@
 package com.example.trailquest.ui.screens.country_screen
 
-import android.widget.RatingBar
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,8 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -34,8 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -105,7 +101,9 @@ fun CountryScreen(
                                 typeId = entry.key.id
                             )
                         },
-                        onDeleteAttraction = { /* TODO */ }
+                        onDeleteAttraction = { attractionName ->
+                            viewModel.deleteAttraction(attractionName)
+                        }
                     )
                 }
             }
@@ -151,7 +149,7 @@ fun AttractionTypeSection(
     onAttractionClicked: (String) -> Unit,
     attractions: List<Attraction>,
     onCreateAttraction: (String, String) -> Unit,
-    onDeleteAttraction: () -> Unit
+    onDeleteAttraction: (String) -> Unit
 ) {
     var isDialogOpen by remember {
         mutableStateOf(false)
@@ -208,10 +206,17 @@ fun AttractionTypeSection(
                             Text(
                                 text = attraction.name, style = MaterialTheme.typography.bodyLarge
                             )
+                            Spacer(modifier = Modifier.weight(1f))
                             AttractionStatusSection(
                                 modifier = Modifier,
                                 isCompleted = attraction.completed
                             )
+                            IconButton(onClick = { onDeleteAttraction(attraction.name) }) {
+                                Icon(
+                                    painter = painterResource(R.drawable.delete_icon),
+                                    contentDescription = stringResource(R.string.attraction_delete_icon)
+                                )
+                            }
                         }
                     }
                 }
@@ -231,7 +236,7 @@ fun AttractionStatusSection(
     modifier: Modifier = Modifier, isCompleted: Boolean
 ) {
     val color =
-        if (isCompleted) Color.Green else Color.Red
+        if (isCompleted) colorResource(R.color.completed_button_green) else colorResource(R.color.incomplete_button_red)
     val text =
         if (isCompleted) stringResource(R.string.country_screen_button_completed) else stringResource(
             R.string.country_screen_button_incomplete

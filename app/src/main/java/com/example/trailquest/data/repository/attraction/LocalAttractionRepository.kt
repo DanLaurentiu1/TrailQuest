@@ -48,6 +48,14 @@ class LocalAttractionRepository(private val attractionDao: AttractionDao) : Attr
         )
     }
 
+    override fun getTotalNumberOfAttractions(): Flow<Float> {
+        return attractionDao.getTotalNumberOfAttractions()
+    }
+
+    override fun getNumberOfCompletedAttractions(): Flow<Float> {
+        return attractionDao.getNumberOfCompletedAttractions()
+    }
+
     override suspend fun upsert(attraction: Attraction) {
         return attractionDao.upsert(attraction)
     }

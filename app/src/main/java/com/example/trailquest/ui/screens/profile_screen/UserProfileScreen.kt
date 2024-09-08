@@ -135,7 +135,7 @@ fun ProfilePicture(
                 .clip(CircleShape)
                 .border(
                     dimensionResource(R.dimen.profile_picture_border_width),
-                    MaterialTheme.colorScheme.onPrimary,
+                    MaterialTheme.colorScheme.primary,
                     CircleShape
                 )
                 .width(dimensionResource(R.dimen.user_profile_screen_image_size))

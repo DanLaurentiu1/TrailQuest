@@ -11,5 +11,4 @@ data class User(
     val level: Int,
     val title: String,
     val bio: String
-    // @DrawableRes val profilePic: Int
 )

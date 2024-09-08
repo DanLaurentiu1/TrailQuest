@@ -18,6 +18,10 @@ interface AttractionRepository {
 
     fun getNumberOfTotalAttractionsByTypeAndCountry(typeId: Int, countryId: Int): Flow<Float>
 
+    fun getTotalNumberOfAttractions(): Flow<Float>
+
+    fun getNumberOfCompletedAttractions(): Flow<Float>
+
     suspend fun upsert(attraction: Attraction)
 
     suspend fun delete(attraction: Attraction)

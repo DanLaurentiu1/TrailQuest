@@ -35,10 +35,10 @@ class AttractionScreenViewModel(private val attractionRepository: AttractionRepo
                 )
             )
         }
-        resetUiState(attractionName = uiState.value.attractionName)
+        initAttraction(attractionName = uiState.value.attractionName)
     }
 
-    fun resetUiState(attractionName: String) {
+    fun initAttraction(attractionName: String) {
         viewModelScope.launch {
             uiState.update {
                 val attraction = getAttractionByName(attractionName)

@@ -1,6 +1,7 @@
 package com.example.trailquest.ui.screens.statistics_screen
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,29 +49,33 @@ fun StatisticsScreen(
     viewModel: StatisticsScreenViewModel = viewModel()
 ) {
     val uiState = viewModel.uiState.collectAsState().value
-
-    LazyColumn(modifier = modifier.background(MaterialTheme.colorScheme.onPrimary)) {
-        item {
-            GoBackTopAppBar(goBackOnClick = onBackClicked, goHomeOnClick = onHomeClicked)
-        }
-        item {
-            uiState.statistics[stringResource(R.string.statistics_screen_overall)]?.let {
-                CountrySpecificStatistics(
-                    country = stringResource(R.string.statistics_screen_overall),
-                    statistics = it
-                )
+    Scaffold(topBar = {
+        GoBackTopAppBar(goBackOnClick = onBackClicked, goHomeOnClick = onHomeClicked)
+    }, content = { paddingValues ->
+        LazyColumn(
+            modifier = modifier
+                .background(MaterialTheme.colorScheme.onPrimary)
+                .padding(paddingValues = paddingValues)
+        ) {
+            item {
+                uiState.statistics[stringResource(R.string.statistics_screen_overall)]?.let {
+                    CountrySpecificStatistics(
+                        country = stringResource(R.string.statistics_screen_overall),
+                        statistics = it
+                    )
+                }
+            }
+            items(uiState.allCountries) { country ->
+                uiState.statistics[country.name]?.let {
+                    CountrySpecificStatistics(
+                        modifier = Modifier,
+                        country = country.name,
+                        statistics = it
+                    )
+                }
             }
         }
-        items(uiState.allCountries) { country ->
-            uiState.statistics[country.name]?.let {
-                CountrySpecificStatistics(
-                    modifier = Modifier,
-                    country = country.name,
-                    statistics = it
-                )
-            }
-        }
-    }
+    })
 }
 
 @Composable

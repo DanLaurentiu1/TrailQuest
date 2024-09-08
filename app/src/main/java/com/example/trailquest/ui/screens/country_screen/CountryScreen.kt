@@ -1,6 +1,7 @@
 package com.example.trailquest.ui.screens.country_screen
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -66,34 +68,48 @@ fun CountryScreen(
     viewModel: CountryScreenViewModel = viewModel()
 ) {
     val uiState = viewModel.uiState.collectAsState().value
-
-    LazyColumn(modifier = modifier.background(MaterialTheme.colorScheme.onPrimary)) {
-        item { GoBackTopAppBar(goBackOnClick = onBackClicked, goHomeOnClick = onHomeClicked) }
-        item {
-            CountryInformationSection(
-                countryName = uiState.countryName,
-                visitors = uiState.countryVisitors,
-                stars = uiState.countryStars
+    Scaffold(
+        topBar = {
+            GoBackTopAppBar(
+                goBackOnClick = onBackClicked,
+                goHomeOnClick = onHomeClicked
             )
-        }
-        items(uiState.countryAttractions.entries.toList()) { entry ->
-            AttractionTypeSection(
-                modifier = Modifier,
-                attractionTypeName = entry.key.name,
-                onAttractionClicked = onAttractionClicked,
-                attractions = entry.value,
-                onCreateAttraction = { attractionName, attractionDescription ->
-                    viewModel.createAttraction(
-                        attractionName = attractionName,
-                        attractionAboutText = attractionDescription,
-                        countryName = viewModel.uiState.value.countryName,
-                        typeId = entry.key.id
+        },
+        content = { paddingValues ->
+            LazyColumn(
+                modifier = modifier
+                    .background(MaterialTheme.colorScheme.onPrimary)
+                    .padding(paddingValues = paddingValues)
+            ) {
+                item { }
+                item {
+                    CountryInformationSection(
+                        countryName = uiState.countryName,
+                        visitors = uiState.countryVisitors,
+                        stars = uiState.countryStars
                     )
-                },
-                onDeleteAttraction = { /* TODO */ }
-            )
+                }
+                items(uiState.countryAttractions.entries.toList()) { entry ->
+                    AttractionTypeSection(
+                        modifier = Modifier,
+                        attractionTypeName = entry.key.name,
+                        onAttractionClicked = onAttractionClicked,
+                        attractions = entry.value,
+                        onCreateAttraction = { attractionName, attractionDescription ->
+                            viewModel.createAttraction(
+                                attractionName = attractionName,
+                                attractionAboutText = attractionDescription,
+                                countryName = viewModel.uiState.value.countryName,
+                                typeId = entry.key.id
+                            )
+                        },
+                        onDeleteAttraction = { /* TODO */ }
+                    )
+                }
+            }
+
         }
-    }
+    )
 }
 
 @Composable

@@ -94,4 +94,8 @@
     <dimen name="dialog_box_button_padding">0dp</dimen>
     <dimen name="dialog_box_upper_text_field_bottom_padding">8dp</dimen>
     <dimen name="dialog_box_lower_text_field_bottom_padding">12dp</dimen>
+
+    <!--Dialog Box-->
+    <dimen name="rating_bar_icon_size">24dp</dimen>
+
 </resources>

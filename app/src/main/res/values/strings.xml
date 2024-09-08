@@ -291,5 +291,8 @@
 
     <!--Content Description-->
     <string name="attraction_add_icon">You can add an attraction by clicking this button</string>
+    <string name="fully_filled_star">This is a fully filled star</string>
+    <string name="partially_filled_star">This is an empty star</string>
+    <string name="empty_star">This is a partially filed star</string>
 
 </resources>

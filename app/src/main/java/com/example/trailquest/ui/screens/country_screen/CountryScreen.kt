@@ -1,5 +1,6 @@
 package com.example.trailquest.ui.screens.country_screen
 
+import android.widget.RatingBar
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -46,6 +47,7 @@ import com.example.trailquest.R
 import com.example.trailquest.data.entities.Attraction
 import com.example.trailquest.ui.reusable_components.DialogBox
 import com.example.trailquest.ui.reusable_components.GoBackTopAppBar
+import com.example.trailquest.ui.reusable_components.RatingStar
 
 @Preview
 @Composable
@@ -116,11 +118,9 @@ fun CountryScreen(
 fun CountryInformationSection(
     modifier: Modifier = Modifier,
     countryName: String,
-    starContentDescription: String = "",
     visitors: Int,
     stars: Float
 ) {
-    var starsRemaining = stars
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
@@ -138,20 +138,7 @@ fun CountryInformationSection(
                     text = countryName,
                     modifier = Modifier.padding(end = dimensionResource(R.dimen.country_screen_country_name_padding_end))
                 )
-                for (i in 1..5) {
-                    if (starsRemaining-- > 1f) {
-                        Icon(
-                            imageVector = Icons.Filled.Star,
-                            contentDescription = starContentDescription,
-                            tint = Color(0xFFFFC700)
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = starContentDescription,
-                        )
-                    }
-                }
+                RatingStar(rating = stars)
             }
             Text(text = stringResource(R.string.country_screen_visitors, visitors))
         }

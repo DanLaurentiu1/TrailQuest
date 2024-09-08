@@ -1,7 +1,6 @@
 package com.example.trailquest.ui.screens.statistics_screen
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -68,9 +67,7 @@ fun StatisticsScreen(
             items(uiState.allCountries) { country ->
                 uiState.statistics[country.name]?.let {
                     CountrySpecificStatistics(
-                        modifier = Modifier,
-                        country = country.name,
-                        statistics = it
+                        modifier = Modifier, country = country.name, statistics = it
                     )
                 }
             }
@@ -80,24 +77,27 @@ fun StatisticsScreen(
 
 @Composable
 fun CountrySpecificStatistics(
-    modifier: Modifier = Modifier, country: String = "",
+    modifier: Modifier = Modifier,
+    country: String = "",
     attractionTypeIconContentDescription: String = "",
-    statistics: HashMap<Type, Array<Float>>
+    statistics: HashMap<Type, Array<Int>>
 ) {
     Column(modifier = modifier) {
         Text(
             text = country,
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(
-                horizontal = dimensionResource(R.dimen.statistics_screen_country_name_padding_horizontal),
-                vertical = dimensionResource(R.dimen.statistics_screen_country_name_padding_vertical)
-            )
+            modifier = Modifier
+                .padding(
+                    vertical = dimensionResource(R.dimen.statistics_screen_country_name_padding_vertical)
+                )
+                .align(Alignment.CenterHorizontally),
         )
-        LazyColumn(modifier = Modifier.height(dimensionResource(R.dimen.country_specific_statistics_height))) {
+        LazyColumn(
+            modifier = Modifier
+                .height(dimensionResource(R.dimen.country_specific_statistics_height))
+        ) {
             items(statistics.entries.toList()) { entry ->
-                val progress = entry.value[0] / entry.value[1]
-                val text = "${entry.value[0]}/${entry.value[1]}"
                 Row(
                     modifier = modifier.padding(bottom = dimensionResource(R.dimen.padding_small)),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -115,8 +115,8 @@ fun CountrySpecificStatistics(
                     )
                     ProgressBar(
                         modifier = Modifier.weight(1.5f),
-                        text = text,
-                        progress = progress
+                        text = "${entry.value[0]}/${entry.value[1]}",
+                        progress = entry.value[0].toFloat() / entry.value[1].toFloat()
                     )
                 }
             }

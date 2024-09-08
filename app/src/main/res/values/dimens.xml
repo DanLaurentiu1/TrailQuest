@@ -26,7 +26,7 @@
     <dimen name="rounded_corner_shape_medium">16dp</dimen>
 
     <!--Country Specific Statistics Height-->
-    <dimen name="country_specific_statistics_height">560dp</dimen>
+    <dimen name="country_specific_statistics_height">580dp</dimen>
 
     <!--Navigation Top App Bar-->
     <dimen name="navigation_top_bar_button_width">52dp</dimen>
@@ -80,7 +80,7 @@
     <dimen name="user_profile_screen_image_size">110dp</dimen>
 
     <!--Statistics Screen-->
-    <dimen name="statistics_screen_country_name_padding_vertical">6dp</dimen>
+    <dimen name="statistics_screen_country_name_padding_vertical">16dp</dimen>
     <dimen name="statistics_screen_country_name_padding_horizontal">20dp</dimen>
 
     <!--Dialog Box-->

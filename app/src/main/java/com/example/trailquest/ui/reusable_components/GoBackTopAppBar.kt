@@ -43,7 +43,7 @@ fun GoBackTopAppBar(
         title = {
             Text(
                 stringResource(R.string.navigation_bar_title),
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineSmall
             )
         },
         navigationIcon = {

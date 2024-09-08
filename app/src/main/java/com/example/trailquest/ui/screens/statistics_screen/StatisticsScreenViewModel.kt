@@ -24,18 +24,18 @@ class StatisticsScreenViewModel(
         uiState.value = StatisticsScreenUiState()
     }
 
-    private suspend fun getNumberOfCompletedAttractionsByType(typeId: Int): Float {
+    private suspend fun getNumberOfCompletedAttractionsByType(typeId: Int): Int {
         return attractionRepository.getNumberOfCompletedAttractionsByType(typeId = typeId).first()
     }
 
-    private suspend fun getNumberOfTotalAttractionsByType(typeId: Int): Float {
+    private suspend fun getNumberOfTotalAttractionsByType(typeId: Int): Int {
         return attractionRepository.getNumberOfTotalAttractionsByType(typeId = typeId).first()
     }
 
     private suspend fun getNumberOfCompletedAttractionsByTypeAndCountry(
         typeId: Int,
         countryId: Int
-    ): Float {
+    ): Int {
         return attractionRepository.getNumberOfCompletedAttractionsByTypeAndCountry(
             typeId = typeId,
             countryId = countryId
@@ -45,7 +45,7 @@ class StatisticsScreenViewModel(
     private suspend fun getNumberOfTotalAttractionsByTypeAndCountry(
         typeId: Int,
         countryId: Int
-    ): Float {
+    ): Int {
         return attractionRepository.getNumberOfTotalAttractionsByTypeAndCountry(
             typeId = typeId,
             countryId = countryId
@@ -60,11 +60,11 @@ class StatisticsScreenViewModel(
         return typeRepository.getAllTypes().first()
     }
 
-    private suspend fun getOverallStatistics(): HashMap<Type, Array<Float>> {
-        val overallHashMap: HashMap<Type, Array<Float>> = hashMapOf()
+    private suspend fun getOverallStatistics(): HashMap<Type, Array<Int>> {
+        val overallHashMap: HashMap<Type, Array<Int>> = hashMapOf()
         val allTypes = getAllTypes()
         allTypes.forEach { type ->
-            overallHashMap[type] = arrayOf(0f, 0f)
+            overallHashMap[type] = arrayOf(0, 0)
             overallHashMap[type]!![0] = getNumberOfCompletedAttractionsByType(
                 typeId = type.id
             )
@@ -73,11 +73,11 @@ class StatisticsScreenViewModel(
         return overallHashMap
     }
 
-    private suspend fun getCountryStatistics(countryId: Int): HashMap<Type, Array<Float>> {
+    private suspend fun getCountryStatistics(countryId: Int): HashMap<Type, Array<Int>> {
         val allTypes = getAllTypes()
-        val countryHashMap: HashMap<Type, Array<Float>> = hashMapOf()
+        val countryHashMap: HashMap<Type, Array<Int>> = hashMapOf()
         allTypes.forEach { type ->
-            countryHashMap[type] = arrayOf(0f, 0f)
+            countryHashMap[type] = arrayOf(0, 0)
             countryHashMap[type]!![0] = getNumberOfCompletedAttractionsByTypeAndCountry(
                 typeId = type.id,
                 countryId = countryId
@@ -90,9 +90,9 @@ class StatisticsScreenViewModel(
         return countryHashMap
     }
 
-    fun resetUiState() {
+    fun initStatistics() {
         viewModelScope.launch {
-            val statistics: HashMap<String, HashMap<Type, Array<Float>>> = hashMapOf()
+            val statistics: HashMap<String, HashMap<Type, Array<Int>>> = hashMapOf()
             val allCountries = getAllCountries()
             allCountries.forEach { country ->
                 statistics[country.name] = getCountryStatistics(country.id)

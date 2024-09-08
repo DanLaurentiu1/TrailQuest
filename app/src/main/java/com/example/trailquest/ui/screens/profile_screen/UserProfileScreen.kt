@@ -84,7 +84,7 @@ fun UserProfileScreen(
                         fontWeight = FontWeight.Bold
                     )
                     TitleAndLevelSection(
-                        progressBarProgress = uiState.attractionsCompleted / uiState.attractionTotal,
+                        progressBarProgress = uiState.attractionsCompleted.toFloat() / uiState.attractionTotal.toFloat(),
                         progressBarText = "${uiState.attractionsCompleted}/${uiState.attractionTotal}",
                         userTitle = uiState.userTitle,
                         userLevel = uiState.userLevel

@@ -7,5 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Custom Colors-->
     <color name="star_fill_yellow">#FFFFC700</color>
+    <color name="completed_button_green">#FFA7E859</color>
+    <color name="incomplete_button_red">#FFF25B5B</color>
+
 </resources>

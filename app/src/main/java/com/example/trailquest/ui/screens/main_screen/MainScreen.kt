@@ -3,6 +3,7 @@ package com.example.trailquest.ui.screens.main_screen
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -73,7 +74,8 @@ fun MainScreen(
                 },
                 onQueryChange = { viewModel.updateSearchBarQuery(it) },
                 isSearchBarActive = uiState.isSearchBarActive,
-                onActiveChange = {}
+                onActiveChange = {},
+                onProfileClicked = onProfileClicked
             )
             FilterButtons(modifier = Modifier)
             Spacer(modifier = Modifier.weight(1f))
@@ -100,7 +102,8 @@ fun SearchAppBar(
     onSearchClick: (String) -> Unit,
     onQueryChange: (String) -> Unit,
     isSearchBarActive: Boolean,
-    onActiveChange: (Boolean) -> Unit
+    onActiveChange: (Boolean) -> Unit,
+    onProfileClicked: () -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -133,7 +136,8 @@ fun SearchAppBar(
                 ProfilePictureImage(
                     drawableResource = R.drawable.android_superhero4,
                     description = profilePictureContentDescription,
-                    modifier = Modifier.padding(dimensionResource(R.dimen.padding_very_small))
+                    modifier = Modifier.padding(dimensionResource(R.dimen.padding_very_small)),
+                    onProfileClicked = onProfileClicked
                 )
             }
         ) {
@@ -194,10 +198,15 @@ fun ProfilePictureImage(
     @DrawableRes drawableResource: Int,
     description: String,
     modifier: Modifier = Modifier,
+    onProfileClicked: () -> Unit,
 ) {
     Box(modifier = modifier) {
         Image(
-            modifier = Modifier.clip(CircleShape),
+            modifier = Modifier
+                .clip(CircleShape)
+                .clickable {
+                    onProfileClicked()
+                },
             painter = painterResource(drawableResource),
             contentDescription = description,
         )

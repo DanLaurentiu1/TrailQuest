@@ -260,7 +260,7 @@
     <string name="navigation_bar_home_text">Home</string>
     <string name="navigation_bar_home_statistics">Statistics</string>
     <string name="navigation_bar_home_profile">Profile</string>
-    <string name="navigation_bar_title">TRAIL QUEST</string>
+    <string name="navigation_bar_title">TRAIL-QUEST</string>
 
     <!--Search Bar-->
     <string name="search_bar_placeholder">Search...</string>
@@ -294,5 +294,6 @@
     <string name="fully_filled_star">This is a fully filled star</string>
     <string name="partially_filled_star">This is an empty star</string>
     <string name="empty_star">This is a partially filed star</string>
+    <string name="attraction_delete_icon">You can delete an attraction by clicking this button</string>
 
 </resources>

@@ -15,6 +15,9 @@ interface TypeDao {
     @Query("SELECT * from Types WHERE name = :name")
     fun getTypeByName(name: String): Flow<Type>
 
+    @Query("SELECT * from Types WHERE id = :id")
+    fun getTypeById(id: Int): Flow<Type>
+
     @Upsert
     suspend fun upsert(type: Type)
 

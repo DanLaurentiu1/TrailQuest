@@ -13,6 +13,10 @@ class LocalTypeRepository(private val typeDao: TypeDao) : TypeRepository {
         return typeDao.getTypeByName(name)
     }
 
+    override fun getTypeById(id: Int): Flow<Type> {
+        return typeDao.getTypeById(id)
+    }
+
     override suspend fun upsert(type: Type) {
         return typeDao.upsert(type)
     }

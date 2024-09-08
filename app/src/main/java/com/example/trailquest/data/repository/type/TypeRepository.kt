@@ -8,6 +8,8 @@ interface TypeRepository {
 
     fun getTypeByName(name: String): Flow<Type>
 
+    fun getTypeById(id: Int): Flow<Type>
+
     suspend fun upsert(type: Type)
 
     suspend fun delete(type: Type)

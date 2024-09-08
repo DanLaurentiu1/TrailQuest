@@ -8,19 +8,23 @@ interface AttractionRepository {
 
     fun getAttractionByName(name: String): Flow<Attraction>
 
+    fun getAttractionById(id: Int): Flow<Attraction>
+
     fun getAttractionsByCountryAndType(countryId: Int, typeId: Int): Flow<List<Attraction>>
 
-    fun getNumberOfCompletedAttractionsByType(typeId: Int): Flow<Float>
+    fun getNumberOfCompletedAttractionsByType(typeId: Int): Flow<Int>
 
-    fun getNumberOfTotalAttractionsByType(typeId: Int): Flow<Float>
+    fun getNumberOfTotalAttractionsByType(typeId: Int): Flow<Int>
 
-    fun getNumberOfCompletedAttractionsByTypeAndCountry(typeId: Int, countryId: Int): Flow<Float>
+    fun getNumberOfCompletedAttractionsByTypeAndCountry(typeId: Int, countryId: Int): Flow<Int>
 
-    fun getNumberOfTotalAttractionsByTypeAndCountry(typeId: Int, countryId: Int): Flow<Float>
+    fun getNumberOfTotalAttractionsByTypeAndCountry(typeId: Int, countryId: Int): Flow<Int>
 
-    fun getTotalNumberOfAttractions(): Flow<Float>
+    fun getTotalNumberOfAttractions(): Flow<Int>
 
-    fun getNumberOfCompletedAttractions(): Flow<Float>
+    fun getNumberOfCompletedAttractions(): Flow<Int>
+
+    fun getMostLikedActivities(numberOfCountries: Int): Flow<List<Int>>
 
     suspend fun upsert(attraction: Attraction)
 

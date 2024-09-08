@@ -15,7 +15,10 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             UserProfileScreenViewModel(
-                trailQuestApplication().container.usersRepository
+                trailQuestApplication().container.usersRepository,
+                trailQuestApplication().container.attractionRepository,
+                trailQuestApplication().container.countryRepository,
+                trailQuestApplication().container.typeRepository
             )
         }
         initializer {

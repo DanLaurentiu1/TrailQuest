@@ -8,6 +8,10 @@ interface CountryRepository {
 
     fun getCountryByName(name: String): Flow<Country>
 
+    fun getCountryById(id: Int): Flow<Country>
+
+    fun getMostCompletedCountry(numberOfCountries: Int): Flow<List<Int>>
+
     suspend fun upsert(country: Country)
 
     suspend fun delete(country: Country)

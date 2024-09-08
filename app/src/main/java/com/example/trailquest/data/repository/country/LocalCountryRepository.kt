@@ -13,6 +13,14 @@ class LocalCountryRepository(private val countryDao: CountryDao) : CountryReposi
         return countryDao.getCountryByName(name)
     }
 
+    override fun getCountryById(id: Int): Flow<Country> {
+        return countryDao.getCountryById(id)
+    }
+
+    override fun getMostCompletedCountry(numberOfCountries: Int): Flow<List<Int>> {
+        return countryDao.getMostCompletedCountry(numberOfCountries)
+    }
+
     override suspend fun upsert(country: Country) {
         return countryDao.upsert(country)
     }

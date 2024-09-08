@@ -13,6 +13,10 @@ class LocalAttractionRepository(private val attractionDao: AttractionDao) : Attr
         return attractionDao.getAttractionByName(name)
     }
 
+    override fun getAttractionById(id: Int): Flow<Attraction> {
+        return attractionDao.getAttractionById(id)
+    }
+
     override fun getAttractionsByCountryAndType(
         countryId: Int,
         typeId: Int
@@ -20,18 +24,18 @@ class LocalAttractionRepository(private val attractionDao: AttractionDao) : Attr
         return attractionDao.getAttractionsByCountryAndType(countryId = countryId, typeId = typeId)
     }
 
-    override fun getNumberOfCompletedAttractionsByType(typeId: Int): Flow<Float> {
+    override fun getNumberOfCompletedAttractionsByType(typeId: Int): Flow<Int> {
         return attractionDao.getNumberOfCompletedAttractionsByType(typeId = typeId)
     }
 
-    override fun getNumberOfTotalAttractionsByType(typeId: Int): Flow<Float> {
+    override fun getNumberOfTotalAttractionsByType(typeId: Int): Flow<Int> {
         return attractionDao.getNumberOfTotalAttractionsByType(typeId = typeId)
     }
 
     override fun getNumberOfCompletedAttractionsByTypeAndCountry(
         typeId: Int,
         countryId: Int
-    ): Flow<Float> {
+    ): Flow<Int> {
         return attractionDao.getNumberOfCompletedAttractionsByTypeAndCountry(
             typeId = typeId,
             countryId = countryId
@@ -41,19 +45,23 @@ class LocalAttractionRepository(private val attractionDao: AttractionDao) : Attr
     override fun getNumberOfTotalAttractionsByTypeAndCountry(
         typeId: Int,
         countryId: Int
-    ): Flow<Float> {
+    ): Flow<Int> {
         return attractionDao.getNumberOfTotalAttractionsByTypeAndCountry(
             typeId = typeId,
             countryId = countryId
         )
     }
 
-    override fun getTotalNumberOfAttractions(): Flow<Float> {
+    override fun getTotalNumberOfAttractions(): Flow<Int> {
         return attractionDao.getTotalNumberOfAttractions()
     }
 
-    override fun getNumberOfCompletedAttractions(): Flow<Float> {
+    override fun getNumberOfCompletedAttractions(): Flow<Int> {
         return attractionDao.getNumberOfCompletedAttractions()
+    }
+
+    override fun getMostLikedActivities(numberOfCountries: Int): Flow<List<Int>> {
+        return attractionDao.getMostLikedActivities(numberOfCountries)
     }
 
     override suspend fun upsert(attraction: Attraction) {

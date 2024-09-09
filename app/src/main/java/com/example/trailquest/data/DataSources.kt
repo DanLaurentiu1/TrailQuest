@@ -3,6 +3,7 @@ package com.example.trailquest.data
 import com.example.trailquest.R
 
 object DataSources {
+    // some general (rigid) data, no need to query for it from the database each time i need it
     val typesIcons = hashMapOf(
         "Restaurants" to R.drawable.rounded_restaurant_24,
         "Historical Sites" to R.drawable.historical_site_icon,

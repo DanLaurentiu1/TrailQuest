@@ -134,7 +134,7 @@ fun SearchAppBar(
             },
             trailingIcon = {
                 ProfilePictureImage(
-                    drawableResource = R.drawable.android_superhero4,
+                    drawableResource = R.drawable.android_superhero2,
                     description = profilePictureContentDescription,
                     modifier = Modifier.padding(dimensionResource(R.dimen.padding_very_small)),
                     onProfileClicked = onProfileClicked

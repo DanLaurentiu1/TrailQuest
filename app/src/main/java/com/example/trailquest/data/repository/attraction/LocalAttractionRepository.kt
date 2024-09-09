@@ -17,6 +17,10 @@ class LocalAttractionRepository(private val attractionDao: AttractionDao) : Attr
         return attractionDao.getAttractionById(id)
     }
 
+    override fun getAttractionsByCountryName(countryName: String): Flow<List<Attraction>> {
+        return attractionDao.getAttractionsByCountryName(countryName)
+    }
+
     override fun getAttractionsByCountryAndType(
         countryId: Int,
         typeId: Int

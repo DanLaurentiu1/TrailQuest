@@ -23,6 +23,7 @@ class AttractionScreenViewModel(private val attractionRepository: AttractionRepo
     }
 
     fun checkAttraction() {
+        // add attraction then refresh UI (need to collect and emit flows for better performance)
         viewModelScope.launch {
             attractionRepository.upsert(
                 Attraction(
@@ -35,6 +36,7 @@ class AttractionScreenViewModel(private val attractionRepository: AttractionRepo
                 )
             )
         }
+        // refresh uiState
         initAttraction(attractionName = uiState.value.attractionName)
     }
 

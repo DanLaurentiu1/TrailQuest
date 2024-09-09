@@ -10,7 +10,6 @@ class MainScreenViewModel : ViewModel() {
         private set
 
     init {
-        //Database
         uiState.value = MainScreenUiState()
     }
 
@@ -31,6 +30,7 @@ class MainScreenViewModel : ViewModel() {
         }
     }
 
+    // when the search bar query was wrong
     private fun resetSearchBarQuery() {
         updateSearchBarQuery("")
     }

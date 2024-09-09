@@ -2,11 +2,13 @@ package com.example.trailquest.ui.screens.statistics_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.trailquest.data.DataSources
 import com.example.trailquest.data.entities.Country
 import com.example.trailquest.data.entities.Type
 import com.example.trailquest.data.repository.attraction.AttractionRepository
 import com.example.trailquest.data.repository.country.CountryRepository
 import com.example.trailquest.data.repository.type.TypeRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
@@ -74,8 +76,8 @@ class StatisticsScreenViewModel(
     }
 
     private suspend fun getCountryStatistics(countryId: Int): HashMap<Type, Array<Int>> {
-        val allTypes = getAllTypes()
         val countryHashMap: HashMap<Type, Array<Int>> = hashMapOf()
+        val allTypes = getAllTypes()
         allTypes.forEach { type ->
             countryHashMap[type] = arrayOf(0, 0)
             countryHashMap[type]!![0] = getNumberOfCompletedAttractionsByTypeAndCountry(
@@ -92,6 +94,12 @@ class StatisticsScreenViewModel(
 
     fun initStatistics() {
         viewModelScope.launch {
+            // HashMap<String, HashMap<Type, Array<Int>>>
+            // String -> Name of a Country ( + Overall )
+            // each country name is the key and the statistics for that country is the value
+
+            // HashMap<Type, Array<Int>> -> each Type is the key to an array of 2 Ints
+            // first Int is the attractions completed (for this type) and the second one is the total number of attractions (for this type)
             val statistics: HashMap<String, HashMap<Type, Array<Int>>> = hashMapOf()
             val allCountries = getAllCountries()
             allCountries.forEach { country ->

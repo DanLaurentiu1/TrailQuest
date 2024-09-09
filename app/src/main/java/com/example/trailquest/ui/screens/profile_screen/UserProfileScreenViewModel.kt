@@ -26,20 +26,24 @@ class UserProfileScreenViewModel(
 
     fun initProfile() {
         viewModelScope.launch {
-
+            // get the first user (me)
             val user = usersRepository.getAllUsers().first().first()
 
+            // get number of attractions (stats)
             val numberAttractions = attractionRepository.getTotalNumberOfAttractions().first()
 
+            // get completed attractions (stats)
             val completedAttractions =
                 attractionRepository.getNumberOfCompletedAttractions().first()
 
+            // get top 3 country names by number of completed attractions belonging to these countries
             val mostLikedThreeCountiesNames: MutableList<String> = mutableListOf()
             countryRepository.getMostCompletedCountry(3).first().forEach { id ->
                 mostLikedThreeCountiesNames += countryRepository.getCountryById(id)
                     .first().name
             }
 
+            // get top 3 type names by number of completed attractions belonging to these types
             val mostLikedThreeActivityNames: MutableList<String> = mutableListOf()
             attractionRepository.getMostLikedActivities(3).first().forEach { id ->
                 mostLikedThreeActivityNames += typeRepository.getTypeById(id)

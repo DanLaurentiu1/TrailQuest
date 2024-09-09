@@ -10,6 +10,8 @@ interface AttractionRepository {
 
     fun getAttractionById(id: Int): Flow<Attraction>
 
+    fun getAttractionsByCountryName(countryName: String): Flow<List<Attraction>>
+
     fun getAttractionsByCountryAndType(countryId: Int, typeId: Int): Flow<List<Attraction>>
 
     fun getNumberOfCompletedAttractionsByType(typeId: Int): Flow<Int>

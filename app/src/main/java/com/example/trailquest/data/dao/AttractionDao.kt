@@ -24,6 +24,9 @@ interface AttractionDao {
     @Query("SELECT * from Attractions where countryId = :countryId and typeId = :typeId")
     fun getAttractionsByCountryAndType(countryId: Int, typeId: Int): Flow<List<Attraction>>
 
+    @Query("SELECT * from Attractions where name = :countryName")
+    fun getAttractionsByCountryName(countryName: String): Flow<List<Attraction>>
+
     @Query("SELECT COUNT(*) from Attractions where typeId = :typeId and completed = 1")
     fun getNumberOfCompletedAttractionsByType(typeId: Int): Flow<Int>
 

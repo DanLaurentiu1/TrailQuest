@@ -43,12 +43,18 @@ class CountryScreenViewModel(
         return typeRepository.getAllTypes().first()
     }
 
+    private suspend fun getAllAttractionsFromCountry(countryName: String): List<Attraction> {
+        return attractionRepository.getAttractionsByCountryName(countryName).first()
+    }
+
+
     fun createAttraction(
         attractionName: String,
         attractionAboutText: String,
         countryName: String,
         typeId: Int
     ) {
+        // delete attraction
         viewModelScope.launch {
             attractionRepository.upsert(
                 Attraction(
@@ -60,6 +66,7 @@ class CountryScreenViewModel(
                 )
             )
         }
+        // refresh uiState
         initCountry(uiState.value.countryName)
     }
 
@@ -75,8 +82,13 @@ class CountryScreenViewModel(
 
     fun initCountry(countryName: String) {
         viewModelScope.launch {
+            // get the specific country
             val country = getCountryFromDatabase(countryName)
+
+            // get all types
             val allTypes = getAllTypes()
+
+            // get all the attractions belonging to those types and this country
             val attractionDict: HashMap<Type, List<Attraction>> = hashMapOf()
             allTypes.forEach { type ->
                 val attractionsForThisTypeAndCountry =

@@ -1,7 +1,7 @@
 
 
 # Project Status
-### 🟢 Ongoing
+### 🟠 Paused
 
 # TrailQuest
 
